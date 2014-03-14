@@ -5,15 +5,13 @@ Bug buster is an implementation of a small shape recognition exercise for ASCII 
 
 Given a bug specification
 
-``
-| |
-###O
-| |
-``
+	| |
+	###O
+	| |
+
 
 the program should be able to spot three bugs in this landscape:
 
-``
                                        
     | |                                
     ###O                               
@@ -23,8 +21,6 @@ the program should be able to spot three bugs in this landscape:
                                    ###O
                                    | | 
 
-
-``
 
 Whitespaces are not part of the bug specification, hence these fields could contain other symbols in more complicated landscapes.
 

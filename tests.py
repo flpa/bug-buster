@@ -1,11 +1,16 @@
 import unittest
-import bugbuster
+from bugbuster import *
 
-class Tests(unittest.TestCase):
-    def setUp(self):
-        "hi"
-    def test_sample(self):
-        self.assertEqual(3, 2)
+class BugSpecTests(unittest.TestCase):
 
+    def test_init(self):
+        width = 5
+        height = 10
+
+        spec = BugSpec(width, height)
+
+        self.assertEqual(width, spec.width)
+        self.assertEqual(height, spec.height)
+        
 if __name__ == '__main__':
     unittest.main()

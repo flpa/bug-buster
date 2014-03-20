@@ -22,6 +22,7 @@ class BugSpec:
     def __init__(self, width, height):
         self.width = width
         self.height = height
+        self.points = []
 
     def addpoint(self, point):
         self.points.append(point)

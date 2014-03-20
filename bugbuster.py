@@ -8,11 +8,21 @@
 # - partially covered bugs
 # - bugs next to each other
 
-class Point:
+class Point: #TODO naming
     """A single point in a bug spec."""
 
     def __init__(self, char, x, y):
         self.char = char
         self.x = x
         self.y = y
+
+class BugSpec:
+    """Specification of a bug."""
+
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def addpoint(self, point):
+        self.points.append(point)
     

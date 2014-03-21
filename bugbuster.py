@@ -36,7 +36,7 @@ def read_bugspec(filepath):
 def array_matches_template(array, template, ignored_elements=[]):
     return false
 
-def flatten(*iterables):
+def flatten(iterable):
     """ A simplified function for flattening lists that works in our context
     (only one level of nested lists), because the proposed solutions
     covering general cases seem to rely on 2.6+ functionality, e.g.:
@@ -44,4 +44,6 @@ def flatten(*iterables):
     - https://stackoverflow.com/a/2158532"""
 #    return [item for sublist in iterables for item in sublist]
     return []
+
+
 

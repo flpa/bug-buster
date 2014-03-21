@@ -38,11 +38,11 @@ def equalp(a,b):
     # TODO Doesn't Python have this somewhere?
     return a == b
     
-def array_matches_template(array, template, comparison_function=equalp):
+def array_matches_template(array, template, predicate=equalp):
     array_flat = flatten(array)
     template_flat = flatten(template)
 
-    return [i for i,j in zip(array_flat, template_flat) if comparison_function(i,j)]
+    return [i for i,j in zip(array_flat, template_flat) if predicate(i,j)]
 
 def flatten(iterable):
     """ A simplified function for flattening an iterable that works

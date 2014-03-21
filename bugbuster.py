@@ -34,7 +34,7 @@ def read_bugspec(filepath):
 #    spec =
 
 def equalp(a,b):
-    """Simple equality predicate, same as 'a == b'."""
+    """Simple equality predicate, equivalent to 'a == b'."""
     # TODO Doesn't Python have this somewhere?
     return a == b
     

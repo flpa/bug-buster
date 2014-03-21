@@ -26,4 +26,14 @@ class BugSpec:
 
     def add_point(self, point):
         self.points.append(point)
+
+
+
+def read_bugspec(filepath):
+    """Reads a bug specification from a file."""
+#    spec =
+
+def array_matches_template(array, template, ignored_elements=[]):
+
+
     

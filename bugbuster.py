@@ -24,6 +24,6 @@ class BugSpec:
         self.height = height
         self.points = []
 
-    def addpoint(self, point):
+    def add_point(self, point):
         self.points.append(point)
     

@@ -18,7 +18,13 @@ class BugSpecTests(unittest.TestCase):
         p = Point('a', 0, 0)
         spec.add_point(p)
 
-        self.assertEqual([p], spec.points)
+        self.assertEqual([p],spec.points)
+
+class Tests(unittest.TestCase):
+
+    def test_flatten(self):
+        result = flatten([[1,2],[3,4]])
+        self.assertEquals(result, [1,2,3,4]);
         
 if __name__ == '__main__':
     unittest.main()

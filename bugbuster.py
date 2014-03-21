@@ -42,5 +42,6 @@ def flatten(*iterables):
     covering general cases seem to rely on 2.6+ functionality, e.g.:
     - http://docs.python.org/2/library/itertools.html#itertools.chain,
     - https://stackoverflow.com/a/2158532"""
-    return [item for sublist in iterables for item in sublist]
+#    return [item for sublist in iterables for item in sublist]
+    return []
 

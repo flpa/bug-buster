@@ -37,13 +37,14 @@ def array_matches_template(array, template, ignored_elements=[]):
     return false
 
 def flatten(iterable):
-    """ A simplified function for flattening lists that works in our context
-    (only one level of nested lists), because the proposed solutions
-    covering general cases seem to rely on 2.6+ functionality, e.g.:
+    """ A simplified function for flattening an iterable that works
+    in our context (only one level of nested lists), because the
+    proposed solutions covering general cases seem to rely on 2.6+
+    functionality, e.g.:
     - http://docs.python.org/2/library/itertools.html#itertools.chain,
     - https://stackoverflow.com/a/2158532"""
-#    return [item for sublist in iterables for item in sublist]
-    return []
+    return [item for sublist in iterable for item in sublist]
+
 
 
 

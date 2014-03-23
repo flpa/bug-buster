@@ -17,13 +17,24 @@ class BugSpecTests(unittest.TestCase):
 
     
 class LandscapeTests(unittest.TestCase):
-    def test_landscape(self):
+    def _init_simple(self):
         landscape = Landscape()
         landscape.add_row("abcd")
         landscape.add_row("efgh")
-        
+        return landscape
+    
+    def test_width(self):
+        landscape = self._init_simple()
         self.assertEqual(landscape.width, 4)
+
+    def test_height(self):
+        landscape = self._init_simple()
         self.assertEqual(landscape.height, 2)
+
+    def test_rows(self):
+        landscape = self._init_simple()
+        self.assertEqual(landscape.rows, ["abcd","efgh"])
+
 
 class Tests(unittest.TestCase):
 

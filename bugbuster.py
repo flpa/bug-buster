@@ -7,12 +7,9 @@ class Point: #TODO naming
         self.y = y
 
     def __eq__(self, other):
-        """Overridden equality check comparing class and attributes.
-        This should suffice here."""
-        if isinstance(other, self.__class__):
-            return self.__dict__ == other.__dict__
-        else:
-            return False
+        """Overridden equality check comparing class and attributes."""
+        return (isinstance(other, self.__class__) and self.val == other.val
+                and self.x == other.x and self.y == other.y)
 
     def __ne__(self, other):
         """Overriden not-equals method, see __eq__"""
@@ -68,7 +65,7 @@ def read_bugspec(filepath):
 
     x = y = 0
     xMax = xMin = yMax = yMin = None
-    points = set()
+    points = []
     
     for char in open(filepath, "r").read():
         if char == '\n':
@@ -80,7 +77,7 @@ def read_bugspec(filepath):
             continue
 
         if _is_relevant_char(char):
-            points.add(Point(x, y, char))
+            points.append(Point(x, y, char))
 
             xMax = _get_higher(xMax, x)
             xMin = _get_lower(xMin, x)
@@ -96,11 +93,10 @@ def read_bugspec(filepath):
             p.x -= xMin
             p.y -= yMin
 
-
     width = xMax - xMin + 1
     height = yMax - yMin + 1
         
-    return BugSpec(width, height, points)
+    return BugSpec(width, height, set(points))
 
 def _is_relevant_char(char):
     """Determines whether a character is relevant for a bug specification.
@@ -122,7 +118,3 @@ def equalp(a,b):
     """Simple equality predicate, equivalent to 'a == b'."""
     # TODO Doesn't Python have this somewhere?
     return a == b
-    
-
-
-

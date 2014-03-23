@@ -61,7 +61,7 @@ class MainTests(unittest.TestCase):
         tmpfile.close()
 
     def test_read_bugspec(self):
-        tmpfile = self._write_tempfile("[]", "{}")
+        tmpfile = self._write_tempfile("[]", "[]", "{}")
         bugspec = read_bugspec(tmpfile.name)
 
         self.assertEquals(bugspec.width, 2)
@@ -70,8 +70,10 @@ class MainTests(unittest.TestCase):
         expectedPoints = set()
         expectedPoints.add(Point(0,0,'['))
         expectedPoints.add(Point(1,0,']'))
-        expectedPoints.add(Point(0,1,'}'))
-        expectedPoints.add(Point(1,1,'}'))
+        expectedPoints.add(Point(0,1,'['))
+        expectedPoints.add(Point(1,1,']'))
+        expectedPoints.add(Point(0,2,'{'))
+        expectedPoints.add(Point(1,3,'}'))
 
         self.assertEquals(bugspec.points, expectedPoints)
         

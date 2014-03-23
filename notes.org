@@ -8,3 +8,9 @@
  - bugs next to each other
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
+* TODOs [0/2]
+  - [ ] input sanity checks
+    (e.g. only lines of equal length - or fill with blanks?)
+  - [ ] edge case tests
+    - landscape smaller than bug
+    - ...

@@ -46,7 +46,14 @@ from tempfile import NamedTemporaryFile
 class MainTests(unittest.TestCase):
     def test_read_landscape(self):
         tmp = NamedTemporaryFile()
-        tmp.write("aha")
+        tmp.write('###\n')
+        tmp.write(' - \n')
+        tmp.flush()
+        
+        landscape = read_landscape(tmp.name)
+
+        self.assertEquals(landscape.rows, ["###", " - "])
+        
         tmp.close()
         
 if __name__ == '__main__':

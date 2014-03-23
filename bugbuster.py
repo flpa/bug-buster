@@ -42,7 +42,7 @@ supported" % (rowLength,self.width)
 def read_landscape(filepath):
     landscape = Landscape()
     for line in open(filepath, "r"):
-        landscape.add_row(line)
+        landscape.add_row(line.strip('\n'))
     return landscape
         
 def read_bugspec(filepath):

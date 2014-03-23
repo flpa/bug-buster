@@ -21,21 +21,21 @@ class Landscape:
     rows = []
 
     def add_row(self, row):
-        _set_or_verify_width(self, row)
-        _add_row(self,row)
+        self._set_or_verify_width(row)
+        self._add_row(row)
         
     def _set_or_verify_width(self, row):
         rowLength = len(row)
-        if width == 0:
-            width = rowLength
+        if self.width == 0:
+            self.width = rowLength
         else:
-            assert width == rowLength, \
-                "Row length %s differs from width %s, this is currently not
-supported" % (rowLength,width)
+            assert self.width == rowLength, \
+                "Row length %s differs from width %s, this is currently not \
+supported" % (rowLength,self.width)
             
     def _add_row(self,row):
-        rows.append(row)
-        height =+ 1
+        self.rows.append(row)
+        self.height += 1
             
         
 def read_bugspec(filepath):

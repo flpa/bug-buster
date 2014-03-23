@@ -61,7 +61,9 @@ class MainTests(unittest.TestCase):
         tmpfile.close()
 
     def test_read_bugspec(self):
-        tmpfile = self._create_tempfile_with_lines("[]", "[]", "{}")
+        tmpfile = self._create_tempfile_with_lines("[]",
+                                                   "[]",
+                                                   "{}")
         bugspec = read_bugspec(tmpfile.name)
 
         self.assertEquals(bugspec.width, 2)
@@ -94,7 +96,9 @@ class MainTests(unittest.TestCase):
         tmpfile.close()
 
     def test_read_bugspec_leading_trailing_empty_lines(self):
-        tmpfile = self._create_tempfile_with_lines("", "!", "")
+        tmpfile = self._create_tempfile_with_lines("",
+                                                   "!",
+                                                   "")
         bugspec = read_bugspec(tmpfile.name)
 
         self.assertEquals(bugspec.width, 1)
@@ -107,7 +111,11 @@ class MainTests(unittest.TestCase):
         tmpfile.close()
 
     def test_read_bugspec_whitespaces_all_around(self):
-        tmpfile = self._create_tempfile_with_lines("", "   ", " ! ", "   ", "")
+        tmpfile = self._create_tempfile_with_lines("",
+                                                   "   ",
+                                                   " ! ",
+                                                   "   ",
+                                                   "")
         bugspec = read_bugspec(tmpfile.name)
 
         self.assertEquals(bugspec.width, 1)

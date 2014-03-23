@@ -60,7 +60,22 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
+    def test_read_bugspec(self):
+        tmpfile = self._write_tempfile("[]", "{}")
+        bugspec = read_bugspec(tmpfile.name)
+
+        self.assertEquals(bugspec.width, 2)
+        self.assertEquals(bugspec.height, 2)
+
+        expectedPoints = set()
+        expectedPoints.add(Point(0,0,'['))
+        expectedPoints.add(Point(1,0,']'))
+        expectedPoints.add(Point(0,1,'}'))
+        expectedPoints.add(Point(1,1,'}'))
+
+        self.assertEquals(bugspec.points, expectedPoints)
         
+        tmpfile.close()
         
 if __name__ == '__main__':
     unittest.main()

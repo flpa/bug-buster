@@ -69,10 +69,7 @@ def read_bugspec(filepath):
     
     for char in open(filepath, "r").read():
         if char == '\n':
-            if points:
-                # We only need to increment y in case points have been added.
-                # This way we cut empty lines on top of the bug spec.
-                y += 1
+            y += 1
             x = 0
             continue
 

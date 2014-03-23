@@ -7,3 +7,4 @@
  - partially covered bugs / broken input
  - bugs next to each other
  - memory usage: whole landscape in-memory?
+ - colorized output for detected bugs

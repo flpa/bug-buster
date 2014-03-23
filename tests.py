@@ -127,6 +127,23 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
+    def read_bugspec_relative_coords(self):
+        tmpfile = self._create_tempfile_with_lines("   ",
+                                                   "  x",
+                                                   " x ",
+                                                   "   ")
+        bugspec = read_bugspec(tmpfile.name)
+
+        self.assertEquals(bugspec.width, 2)
+        self.assertEquals(bugspec.height, 2)
+
+        expectedPoints = set()
+        expectedPoints.add(Point(1, 0, 'x'))
+        expectedPoints.add(Point(0, 1, 'x'))
+        self.assertEquals(bugspec.points, expectedPoints)
+        
+        tmpfile.close()
+
         
         
 if __name__ == '__main__':

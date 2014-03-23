@@ -19,13 +19,13 @@ class BugSpecTests(unittest.TestCase):
 class LandscapeTests(unittest.TestCase):
     def _init_simple(self):
         landscape = Landscape()
-        landscape.add_row("abcd")
-        landscape.add_row("efgh")
+        landscape.add_row("foo")
+        landscape.add_row("bar")
         return landscape
     
     def test_width(self):
         landscape = self._init_simple()
-        self.assertEqual(landscape.width, 4)
+        self.assertEqual(landscape.width, 3)
 
     def test_height(self):
         landscape = self._init_simple()
@@ -33,9 +33,14 @@ class LandscapeTests(unittest.TestCase):
 
     def test_rows(self):
         landscape = self._init_simple()
-        self.assertEqual(landscape.rows, ["abcd","efgh"])
+        self.assertEqual(landscape.rows, ["foo","bar"])
+    
+    def test_row_width_verification(self):
+        landscape = Landscape()
+        landscape.add_row("short row")
 
-
+        self.assertRaises(AssertionError, landscape.add_row, "way longer row")
+        
 class Tests(unittest.TestCase):
 
     def test_flatten(self):

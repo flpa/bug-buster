@@ -76,15 +76,13 @@ def read_bugspec(filepath):
             x = 0
             continue
 
-        if _is_char_ignored(char):
-            continue
-        
-        points.add(Point(x, y, char))
+        if _is_relevant_char(char):
+            points.add(Point(x, y, char))
 
-        xMax = _get_higher(xMax, x)
-        xMin = _get_lower(xMin, x)
-        yMax = _get_higher(yMax, y)
-        yMin = _get_lower(yMin, y)
+            xMax = _get_higher(xMax, x)
+            xMin = _get_lower(xMin, x)
+            yMax = _get_higher(yMax, y)
+            yMin = _get_lower(yMin, y)
 
         x += 1
 
@@ -94,8 +92,10 @@ def read_bugspec(filepath):
         
     return BugSpec(width, height, points)
 
-def _is_char_ignored(char):
-    return char == ' '
+def _is_relevant_char(char):
+    """Determines whether a character is relevant for a bug specification.
+    Currently we only ignore blanks (' ')."""
+    return char != ' '
 
 def _get_lower(old, new):
     if old is None or old > new:

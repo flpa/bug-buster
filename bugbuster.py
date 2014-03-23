@@ -89,6 +89,13 @@ def read_bugspec(filepath):
 
         x += 1
 
+    # adapt coordinates to be relative to a rectangle only surrounding actual
+    # bug points
+    if xMin | yMin:
+        for p in points:
+            p.x -= xMin
+            p.y -= yMin
+
 
     width = xMax - xMin + 1
     height = yMax - yMin + 1

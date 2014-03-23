@@ -40,6 +40,14 @@ class LandscapeTests(unittest.TestCase):
         landscape.add_row("short row")
 
         self.assertRaises(AssertionError, landscape.add_row, "way longer row")
+
+from tempfile import NamedTemporaryFile
+
+class MainTests(unittest.TestCase):
+    def test_read_landscape(self):
+        tmp = NamedTemporaryFile()
+        tmp.write("aha")
+        tmp.close()
         
 if __name__ == '__main__':
     unittest.main()

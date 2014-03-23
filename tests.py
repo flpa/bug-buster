@@ -44,7 +44,7 @@ class LandscapeTests(unittest.TestCase):
 from tempfile import NamedTemporaryFile
 
 class MainTests(unittest.TestCase):
-    def _write_tempfile(self, *lines):
+    def _create_tempfile_with_lines(self, *lines):
         tmp = NamedTemporaryFile()
         for line in lines:
             tmp.write(line)
@@ -53,7 +53,7 @@ class MainTests(unittest.TestCase):
         return tmp
     
     def test_read_landscape(self):
-        tmpfile = self._write_tempfile("###", " - ")
+        tmpfile = self._create_tempfile_with_lines("###", " - ")
         landscape = read_landscape(tmpfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
@@ -61,19 +61,19 @@ class MainTests(unittest.TestCase):
         tmpfile.close()
 
     def test_read_bugspec(self):
-        tmpfile = self._write_tempfile("[]", "[]", "{}")
+        tmpfile = self._create_tempfile_with_lines("[]", "[]", "{}")
         bugspec = read_bugspec(tmpfile.name)
 
         self.assertEquals(bugspec.width, 2)
-        self.assertEquals(bugspec.height, 2)
+        self.assertEquals(bugspec.height, 3)
 
         expectedPoints = set()
-        expectedPoints.add(Point(0,0,'['))
-        expectedPoints.add(Point(1,0,']'))
-        expectedPoints.add(Point(0,1,'['))
-        expectedPoints.add(Point(1,1,']'))
-        expectedPoints.add(Point(0,2,'{'))
-        expectedPoints.add(Point(1,3,'}'))
+        expectedPoints.add(Point(0, 0, '['))
+        expectedPoints.add(Point(1, 0, ']'))
+        expectedPoints.add(Point(0, 1, '['))
+        expectedPoints.add(Point(1, 1, ']'))
+        expectedPoints.add(Point(0, 2, '{'))
+        expectedPoints.add(Point(1, 2, '}'))
 
         self.assertEquals(bugspec.points, expectedPoints)
         

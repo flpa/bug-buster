@@ -3,22 +3,17 @@ from bugbuster import *
 
 class BugSpecTests(unittest.TestCase):
 
+    # basic sanity test, will probably be removed
     def test_init(self):
         width = 5
         height = 10
+        points = [4, 5]
 
-        spec = BugSpec(width, height)
+        spec = BugSpec(width, height, points)
 
         self.assertEqual(width, spec.width)
         self.assertEqual(height, spec.height)
-
-    def test_add_point(self):
-        spec = BugSpec(5,5)
-
-        p = Point('a', 0, 0)
-        spec.add_point(p)
-
-        self.assertEqual([p],spec.points)
+        self.assertEqual(points, spec.points)
 
 class Tests(unittest.TestCase):
 

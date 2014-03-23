@@ -9,15 +9,10 @@ class Point: #TODO naming
 class BugSpec:
     """Specification of a bug."""
 
-    def __init__(self, width, height):
+    def __init__(self, width, height, points):
         self.width = width
         self.height = height
-        self.points = []
-
-    def add_point(self, point):
-        self.points.append(point)
-
-
+        self.points = points
 
 def read_bugspec(filepath):
     """Reads a bug specification from a file."""

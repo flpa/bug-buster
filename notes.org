@@ -14,3 +14,5 @@
   - [ ] edge case tests
     - landscape smaller than bug
     - ...
+  - [ ] inheriting from 'object' yes/no?
+    

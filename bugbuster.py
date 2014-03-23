@@ -14,6 +14,30 @@ class BugSpec:
         self.height = height
         self.points = points
 
+class Landscape:
+    """Class representing a landscape"""
+    width = 0
+    height = 0
+    rows = []
+
+    def add_row(self, row):
+        _set_or_verify_width(self, row)
+        _add_row(self,row)
+        
+    def _set_or_verify_width(self, row):
+        rowLength = len(row)
+        if width == 0:
+            width = rowLength
+        else:
+            assert width == rowLength, \
+                "Row length %s differs from width %s, this is currently not
+supported" % (rowLength,width)
+            
+    def _add_row(self,row):
+        rows.append(row)
+        height =+ 1
+            
+        
 def read_bugspec(filepath):
     """Reads a bug specification from a file."""
 #    spec =

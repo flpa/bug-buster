@@ -1,8 +1,8 @@
 * Ideas
  - function to find array in array? cant deal with stuff between legs i think
  - regex? hard to generate? could it even match?
-* Added Complexity
- - rotation
+* Extra features / Things to consider
+ - Rotation
  - different look(s): what if a friendly bug looks like a regular + some extras
  - partially covered bugs / broken input
  - bugs next to each other

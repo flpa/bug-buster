@@ -15,6 +15,16 @@ class BugSpecTests(unittest.TestCase):
         self.assertEqual(height, spec.height)
         self.assertEqual(points, spec.points)
 
+    
+class LandscapeTests(unittest.TestCase):
+    def test_landscape(self):
+        landscape = Landscape()
+        landscape.add_row("abcd")
+        landscape.add_row("efgh")
+        
+        self.assertEqual(landscape.width, 4)
+        self.assertEqual(landscape.height, 2)
+
 class Tests(unittest.TestCase):
 
     def test_flatten(self):

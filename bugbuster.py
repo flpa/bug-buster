@@ -92,12 +92,12 @@ def read_bugspec(filepath):
     return BugSpec(width, height, points)
 
 def _get_lower(old, new):
-    if old == None or old > new:
+    if old is None or old > new:
         return new
     return old
 
 def _get_higher(old, new):
-    if old == None or old < new:
+    if old is None or old < new:
         return new
     return old
 

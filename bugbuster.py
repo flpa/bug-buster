@@ -76,6 +76,9 @@ def read_bugspec(filepath):
             x = 0
             continue
 
+        if _is_char_ignored(char):
+            continue
+        
         points.add(Point(x, y, char))
 
         xMax = _get_higher(xMax, x)
@@ -90,6 +93,9 @@ def read_bugspec(filepath):
     height = yMax - yMin + 1
         
     return BugSpec(width, height, points)
+
+def _is_char_ignored(char):
+    return char == ' '
 
 def _get_lower(old, new):
     if old is None or old > new:

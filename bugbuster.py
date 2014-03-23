@@ -1,13 +1,3 @@
-# ideas: 
-# - function to find array in array? cant deal with stuff between legs i think
-# - regex? hard to generate? could it even match?
-# 
-# added complexity:
-# - rotation
-# - different look(s)
-# - partially covered bugs
-# - bugs next to each other
-
 class Point: #TODO naming
     """A single point in a bug spec."""
 
@@ -52,7 +42,6 @@ def flatten(iterable):
     - http://docs.python.org/2/library/itertools.html#itertools.chain,
     - https://stackoverflow.com/a/2158532"""
     return [item for sublist in iterable for item in sublist]
-
 
 
 

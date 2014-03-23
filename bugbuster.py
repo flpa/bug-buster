@@ -16,9 +16,11 @@ class BugSpec:
 
 class Landscape:
     """Class representing a landscape"""
-    width = 0
-    height = 0
-    rows = []
+
+    def __init__(self):
+        self.width = 0
+        self.height = 0
+        self.rows = []
 
     def add_row(self, row):
         self._set_or_verify_width(row)

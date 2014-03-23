@@ -106,6 +106,19 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
+    def test_read_bugspec_whitespaces_all_around(self):
+        tmpfile = self._create_tempfile_with_lines("", "   ", " ! ", "   ", "")
+        bugspec = read_bugspec(tmpfile.name)
+
+        self.assertEquals(bugspec.width, 1)
+        self.assertEquals(bugspec.height, 1)
+
+        expectedPoints = set()
+        expectedPoints.add(Point(0, 0, '!'))
+        self.assertEquals(bugspec.points, expectedPoints)
+        
+        tmpfile.close()
+
         
         
 if __name__ == '__main__':

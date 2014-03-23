@@ -78,6 +78,21 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.points, expectedPoints)
         
         tmpfile.close()
+
+    def test_read_bugspec_whitespace_ignored(self):
+        tmpfile = self._create_tempfile_with_lines("[ ]")
+        bugspec = read_bugspec(tmpfile.name)
+
+        self.assertEquals(bugspec.width, 3)
+        self.assertEquals(bugspec.height, 1)
+
+        expectedPoints = set()
+        expectedPoints.add(Point(0, 0, '['))
+        expectedPoints.add(Point(2, 0, ']'))
+        self.assertEquals(bugspec.points, expectedPoints)
+        
+        tmpfile.close()
+        
         
 if __name__ == '__main__':
     unittest.main()

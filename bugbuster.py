@@ -80,7 +80,7 @@ def read_bugspec(filepath):
 
         xMax = _get_higher(xMax, x)
         xMin = _get_lower(xMin, x)
-        yMax = _get_higher(xMax, y)
+        yMax = _get_higher(yMax, y)
         yMin = _get_lower(yMin, y)
 
         x += 1

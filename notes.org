@@ -8,7 +8,7 @@
  - bugs next to each other
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
-* TODOs [0/5]
+* TODOs [0/6]
   - [ ] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
   - [ ] edge case tests
@@ -17,4 +17,5 @@
   - [ ] inheriting from 'object' yes/no?
   - [ ] closing file streams
   - [ ] prepared test files vs file generation?
+  - [ ] padding unfinished lines
     

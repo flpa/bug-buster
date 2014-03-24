@@ -60,12 +60,35 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
-    def test_read_landscape_trailing_empty_line(self):
+    def test_read_landscape_trailing_empty_line_is_ignored(self):
         tmpfile = self._create_tempfile_with_lines("###", " - ", "")
         landscape = read_landscape(tmpfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
         
+        tmpfile.close()
+
+    def test_read_landscape_leading_blank_line_is_added(self):
+        tmpfile = self._create_tempfile_with_lines("   ", "###", " - ")
+        landscape = read_landscape(tmpfile.name)
+
+        self.assertEquals(landscape.rows, ["   ", "###", " - "])
+        
+        tmpfile.close()
+
+    def test_read_landscape_leading_empty_lines_are_ignored(self):
+        tmpfile = self._create_tempfile_with_lines("", "", "###", " - ")
+        landscape = read_landscape(tmpfile.name)
+
+        self.assertEquals(landscape.rows, ["###", " - "])
+        
+        tmpfile.close()
+
+    def test_read_landscape_interjacent_empty_line_causes_error(self):
+        tmpfile = self._create_tempfile_with_lines("###", "", " - ")
+
+        self.assertRaises(AssertionError, read_landscape, tmpfile.name)
+
         tmpfile.close()
         
     def test_read_bugspec(self):

@@ -60,6 +60,14 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
+    def test_read_landscape_trailing_empty_line(self):
+        tmpfile = self._create_tempfile_with_lines("###", " - ", "")
+        landscape = read_landscape(tmpfile.name)
+
+        self.assertEquals(landscape.rows, ["###", " - "])
+        
+        tmpfile.close()
+        
     def test_read_bugspec(self):
         tmpfile = self._create_tempfile_with_lines("[]",
                                                    "[]",

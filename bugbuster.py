@@ -115,3 +115,9 @@ def equalp(a,b):
     """Simple equality predicate, equivalent to 'a == b'."""
     # TODO Doesn't Python have this somewhere?
     return a == b
+
+def count_bugs(bugfile, landscapefile):
+    bugspec = read_bugspec(bugfile)
+    landscape = read_landscape(landscapefile)
+
+    return 0

@@ -144,7 +144,9 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
-        
+    def test_count_bugs(self):
+        result = count_bugs("bug.txt", "landscape.txt")
+        self.assertEquals(result, 3)
         
 if __name__ == '__main__':
     unittest.main()

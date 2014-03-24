@@ -51,7 +51,8 @@ class MainTests(unittest.TestCase):
             tmp.write('\n')
         tmp.flush()
         return tmp
-    
+
+    # TODO extract ReadLandscapeTests
     def test_read_landscape(self):
         tmpfile = self._create_tempfile_with_lines("###", " - ")
         landscape = read_landscape(tmpfile.name)
@@ -87,6 +88,7 @@ class MainTests(unittest.TestCase):
     def test_read_landscape_interjacent_empty_line_causes_error(self):
         tmpfile = self._create_tempfile_with_lines("###", "", " - ")
 
+        # TODO should this raise another error?
         self.assertRaises(AssertionError, read_landscape, tmpfile.name)
 
         tmpfile.close()

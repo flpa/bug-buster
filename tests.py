@@ -177,9 +177,19 @@ class MainTests(unittest.TestCase):
         
         tmpfile.close()
 
-    def test_count_bugs(self):
+class CountBugTests(unittest.TestCase):
+        
+    def test_sample(self):
         result = count_bugs("bug.txt", "landscape.txt")
         self.assertEquals(result, 3)
+
+    def test_exactly_one_bug_fits_in_landscape(self):
+        result = count_bugs("bug.txt", "tests/res/landscape-single-bug-size.txt")
+        self.assertEquals(result, 1)
+
+    def test_landscape_smaller_than_bug(self):
+        result = count_bugs("bug.txt", "tests/res/landscape-smaller-than-bug.txt")
+        self.assertEquals(result, 0)
         
 if __name__ == '__main__':
     unittest.main()

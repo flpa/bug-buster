@@ -121,4 +121,26 @@ def count_bugs(bugfile, landscapefile):
     bugspec = read_bugspec(bugfile)
     landscape = read_landscape(landscapefile)
 
-    return 0
+    xOffset = 0
+    yOffset = 0
+
+    bugcounter = 0
+    
+    while landscape.width >= bugspec.width + xOffset and \
+            landscape.height >= bugspec.height + yOffset:
+        allMatch = True
+        for p in bugspec.points:
+            if landscape.rows[yOffset + p.y][xOffset + p.x] != p.val:
+                allMatch = False
+                break
+
+        if allMatch:
+            bugcounter += 1
+
+        if landscape.width == bugspec.width + xOffset:
+            xOffset = 0
+            yOffset += 1
+        else:
+            xOffset += 1
+    
+    return bugcounter

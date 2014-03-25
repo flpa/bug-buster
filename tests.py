@@ -190,6 +190,22 @@ class CountBugTests(unittest.TestCase):
     def test_landscape_smaller_than_bug(self):
         result = count_bugs("bug.txt", "tests/res/landscape-smaller-than-bug.txt")
         self.assertEquals(result, 0)
+
+    def test_partial_bugs(self):
+        result = count_bugs("bug.txt", "tests/res/landscape-partial-bugs.txt")
+        self.assertEquals(result, 0)
+
+    def test_bugs_next_to_each_other(self):
+        result = count_bugs("bug.txt", "tests/res/landscape-bugs-next-to-each-other.txt")
+        self.assertEquals(result, 3)
+
+    def test_empty_line(self):
+        result = count_bugs("bug.txt", "tests/res/landscape-empty-line.txt")
+        self.assertEquals(result, 2)
+
+    def test_other_symbols(self):
+        result = count_bugs("bug.txt", "tests/res/landscape-other-symbols.txt")
+        self.assertEquals(result, 3)
         
 if __name__ == '__main__':
     unittest.main()

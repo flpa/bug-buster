@@ -36,10 +36,17 @@ class Landscape:
         self.width = 0
         self.height = 0
         self.rows = []
+        self.interjacent_empty_rows = []
 
     def add_row(self, row):
-        self._set_or_verify_width(row)
-        self._add_row(row)
+        if row:
+            assert len(self.interjacent_empty_rows) == 0, "There have been empty \
+rows since the last content row. This is currently not supported."
+            
+            self._set_or_verify_width(row)
+            self._add_row(row)
+        elif self.rows:
+            self.interjacent_empty_rows.append(row)
         
     def _set_or_verify_width(self, row):
         rowLength = len(row)
@@ -48,7 +55,7 @@ class Landscape:
         else:
             assert self.width == rowLength, \
                 "Row length %s differs from width %s, this is currently not \
-supported" % (rowLength,self.width)
+supported" % (rowLength, self.width)
             
     def _add_row(self,row):
         self.rows.append(row)

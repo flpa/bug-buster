@@ -1,4 +1,4 @@
-class Point: #TODO naming
+class Point(object): #TODO naming
     """A single point in a bug spec."""
 
     def __init__(self, x, y, val):
@@ -21,7 +21,7 @@ class Point: #TODO naming
     def __repr__(self):
         return "%s(%s/%s)" % (self.val, self.x, self.y)
 
-class BugSpec:
+class BugSpec(object):
     """Specification of a bug."""
 
     def __init__(self, width, height, points):
@@ -29,7 +29,7 @@ class BugSpec:
         self.height = height
         self.points = points
 
-class Landscape:
+class Landscape(object):
     """Class representing a landscape"""
 
     def __init__(self):

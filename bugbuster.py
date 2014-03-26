@@ -72,8 +72,12 @@ def read_landscape(filepath):
     for line in open(filepath, "r"):
         landscape.add_row(line.strip('\n'))
     return landscape
+def _is_blank(char):
+    """Determines whether a character is relevant for a bug specification.
+    Currently we only ignore blanks (' ')."""
+    return char != ' '
 
-def read_bugspec(filepath):
+def read_bugspec(filepath, char_predicate=_is_blank):
     """Reads a bug specification from a file."""
 
     x = y = 0
@@ -86,7 +90,7 @@ def read_bugspec(filepath):
             x = 0
             continue
 
-        if _is_relevant_char(char):
+        if char_predicate(char):
             points.append(Point(x, y, char))
 
             xMax = max(xMax, x)
@@ -110,11 +114,6 @@ def _adapt_coordinates(points, xMin, yMin):
         for p in points:
             p.x -= xMin
             p.y -= yMin
-
-def _is_relevant_char(char):
-    """Determines whether a character is relevant for a bug specification.
-    Currently we only ignore blanks (' ')."""
-    return char != ' '
 
 def _get_lower(old, new):
     if old is None or old > new:

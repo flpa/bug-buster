@@ -83,8 +83,6 @@ class MainTests(unittest.TestCase):
 
     def test_read_landscape_interjacent_empty_line_causes_error(self):
         self._create_tempfile_with_lines("###", "", " - ")
-
-        # TODO should this raise another error?
         self.assertRaises(AssertionError, read_landscape, self.tempfile.name)
         
     def test_read_bugspec(self):

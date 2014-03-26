@@ -1,21 +1,6 @@
 import unittest
 from bugbuster import *
 
-class BugSpecTests(unittest.TestCase):
-
-    # basic sanity test, will probably be removed
-    def test_init(self):
-        width = 5
-        height = 10
-        points = [4, 5]
-
-        spec = BugSpec(width, height, points)
-
-        self.assertEqual(width, spec.width)
-        self.assertEqual(height, spec.height)
-        self.assertEqual(points, spec.points)
-
-    
 class LandscapeTests(unittest.TestCase):
     def _init_simple(self):
         landscape = Landscape()

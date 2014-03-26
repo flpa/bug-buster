@@ -8,16 +8,17 @@
  - bugs next to each other
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
-* TODOs [0/6]
-  - [ ] input sanity checks
+ - padding unfinished lines
+* TODOs [2/6]
+  - [X] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
-  - [ ] edge case tests
+  - [X] edge case tests
     - landscape smaller than bug
     - ...
   - [ ] inheriting from 'object' yes/no?
   - [ ] closing file streams
   - [ ] prepared test files vs file generation?
-  - [ ] padding unfinished lines
+  - [ ] unify assertions
 * Links
   http://pythonhosted.org/aafigure/appendix.html
   http://www.cs.berkeley.edu/~malik/papers/BMP-shape.pdf

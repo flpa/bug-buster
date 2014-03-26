@@ -161,35 +161,31 @@ class MainTests(unittest.TestCase):
         expectedPoints.add(Point(0, 1, 'x'))
         self.assertEquals(bugspec.points, expectedPoints)
 
-class CountBugTests(unittest.TestCase):
+class CountBugsTests(unittest.TestCase):
+    def _protobug_test(self, landscapefile, bugcount):
+        result = count_bugs("bug.txt", landscapefile)
+        self.assertEquals(result, bugcount)        
     
     def test_sample(self):
-        result = count_bugs("bug.txt", "landscape.txt")
-        self.assertEquals(result, 3)
+        self._protobug_test("landscape.txt", 3)
 
     def test_exactly_one_bug_fits_in_landscape(self):
-        result = count_bugs("bug.txt", "tests/res/landscape-single-bug-size.txt")
-        self.assertEquals(result, 1)
+        self._protobug_test("tests/res/landscape-single-bug-size.txt", 1)
 
     def test_landscape_smaller_than_bug(self):
-        result = count_bugs("bug.txt", "tests/res/landscape-smaller-than-bug.txt")
-        self.assertEquals(result, 0)
+        self._protobug_test("tests/res/landscape-smaller-than-bug.txt", 0)
 
     def test_partial_bugs(self):
-        result = count_bugs("bug.txt", "tests/res/landscape-partial-bugs.txt")
-        self.assertEquals(result, 0)
+        self._protobug_test("tests/res/landscape-partial-bugs.txt", 0)
 
     def test_bugs_next_to_each_other(self):
-        result = count_bugs("bug.txt", "tests/res/landscape-bugs-next-to-each-other.txt")
-        self.assertEquals(result, 3)
+        self._protobug_test("tests/res/landscape-bugs-next-to-each-other.txt", 3)
 
     def test_empty_line(self):
-        result = count_bugs("bug.txt", "tests/res/landscape-empty-line.txt")
-        self.assertEquals(result, 2)
+        self._protobug_test("tests/res/landscape-empty-line.txt", 2)
 
     def test_other_symbols(self):
-        result = count_bugs("bug.txt", "tests/res/landscape-other-symbols.txt")
-        self.assertEquals(result, 3)
+        self._protobug_test("tests/res/landscape-other-symbols.txt", 3)
         
 if __name__ == '__main__':
     unittest.main()

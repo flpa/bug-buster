@@ -1,5 +1,6 @@
 class Point(object): #TODO naming
-    """A single point in a bug spec."""
+    """A single point in a bug specification, consisting of x/y coordinates \
+    and a value 'val'."""
 
     def __init__(self, x, y, val):
         self.val = val
@@ -12,7 +13,7 @@ class Point(object): #TODO naming
                 and self.x == other.x and self.y == other.y)
 
     def __ne__(self, other):
-        """Overriden not-equals method, see __eq__"""
+        """Overriden not-equals method for consistency with __eq__."""
         return not self.__eq__(other)
 
     def __hash__(self):
@@ -22,7 +23,8 @@ class Point(object): #TODO naming
         return "%s(%s/%s)" % (self.val, self.x, self.y)
 
 class BugSpec(object):
-    """Specification of a bug."""
+    """Represents a bug specification and holds width, height and the points \
+    the bug consists of."""
 
     def __init__(self, width, height, points):
         self.width = width
@@ -30,7 +32,9 @@ class BugSpec(object):
         self.points = points
 
 class Landscape(object):
-    """Class representing a landscape"""
+    """A class representing a landscape to be scanned for bugs. It consists \
+    of a collection of rows of equal length, and holds information about the \
+    total width and height."""
 
     def __init__(self):
         self.width = 0
@@ -61,6 +65,8 @@ supported" % (rowLength, self.width)
         self.rows.append(row)
         self.height += 1
 
+# main part
+        
 def read_landscape(filepath):
     landscape = Landscape()
     for line in open(filepath, "r"):

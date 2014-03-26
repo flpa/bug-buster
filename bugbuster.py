@@ -107,6 +107,7 @@ def read_bugspec(filepath, char_predicate=_is_blank):
     
     _adapt_coordinates(points, x_min, y_min)
 
+    # + 1 to compensate zero-based indexes
     width = x_max - x_min + 1
     height = y_max - y_min + 1
         

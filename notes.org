@@ -19,6 +19,7 @@
   - [ ] closing file streams
   - [ ] prepared test files vs file generation?
   - [ ] unify assertions
+  - [ ] variable naming style
 * Links
   http://pythonhosted.org/aafigure/appendix.html
   http://www.cs.berkeley.edu/~malik/papers/BMP-shape.pdf

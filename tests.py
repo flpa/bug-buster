@@ -76,15 +76,18 @@ class MainTests(unittest.TestCase):
             newset.add(Point(*t))
         return newset
 
+    def _check_width_height_points(self, width, height, points):
+        bugspec = read_bugspec(self.tempfile.name)
+
+        self.assertEquals(bugspec.width, width)
+        self.assertEquals(bugspec.height, height)
+        self.assertEquals(bugspec.points, points)
+    
+
     def test_read_bugspec(self):
         self._create_tempfile_with_lines("[]",
                                          "[]",
                                          "{}")
-        bugspec = read_bugspec(self.tempfile.name)
-
-        self.assertEquals(bugspec.width, 2)
-        self.assertEquals(bugspec.height, 3)
-
         expectedPoints = self._pointset_from_tuples((0, 0, '['),
                                                     (1, 0, ']'),
                                                     (0, 1, '['),
@@ -92,31 +95,22 @@ class MainTests(unittest.TestCase):
                                                     (0, 2, '{'),
                                                     (1, 2, '}'))
 
-        self.assertEquals(bugspec.points, expectedPoints)
+        self._check_width_height_points(2, 3, expectedPoints)
 
     def test_read_bugspec_whitespace_ignored(self):
         self._create_tempfile_with_lines("[ ]")
-        bugspec = read_bugspec(self.tempfile.name)
-
-        self.assertEquals(bugspec.width, 3)
-        self.assertEquals(bugspec.height, 1)
-
         expectedPoints = self._pointset_from_tuples((0, 0, '['),
                                                     (2, 0, ']'))
 
-        self.assertEquals(bugspec.points, expectedPoints)
-
+        self._check_width_height_points(3, 1, expectedPoints)
+        
     def test_read_bugspec_leading_trailing_empty_lines(self):
         self._create_tempfile_with_lines("",
                                          "!",
                                          "")
-        bugspec = read_bugspec(self.tempfile.name)
-
-        self.assertEquals(bugspec.width, 1)
-        self.assertEquals(bugspec.height, 1)
-
         expectedPoints = self._pointset_from_tuples((0, 0, '!'))
-        self.assertEquals(bugspec.points, expectedPoints)
+
+        self._check_width_height_points(1, 1, expectedPoints)
 
     def test_read_bugspec_whitespaces_all_around(self):
         self._create_tempfile_with_lines("",
@@ -124,27 +118,19 @@ class MainTests(unittest.TestCase):
                                          " ! ",
                                          "   ",
                                          "")
-        bugspec = read_bugspec(self.tempfile.name)
-
-        self.assertEquals(bugspec.width, 1)
-        self.assertEquals(bugspec.height, 1)
-
         expectedPoints = self._pointset_from_tuples((0, 0, '!'))
-        self.assertEquals(bugspec.points, expectedPoints)
 
+        self._check_width_height_points(1, 1, expectedPoints)
+        
     def read_bugspec_relative_coords(self):
         self._create_tempfile_with_lines("   ",
                                          "  x",
                                          " x ",
                                          "   ")
-        bugspec = read_bugspec(self.tempfile.name)
-
-        self.assertEquals(bugspec.width, 2)
-        self.assertEquals(bugspec.height, 2)
-
         expectedPoints = self._pointset_from_tuples((1, 0, 'x'),
                                                     (0, 1, 'x'))
-        self.assertEquals(bugspec.points, expectedPoints)
+
+        self._check_width_height_points(2, 2, expectedPoints)
 
 class CountBugsTests(unittest.TestCase):
     def _protobug_test(self, landscapefile, bugcount):

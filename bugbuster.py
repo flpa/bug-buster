@@ -53,13 +53,13 @@ rows since the last content row. This is currently not supported."
             self._interjacent_empty_rows.append(row)
         
     def _set_or_verify_width(self, row):
-        rowLength = len(row)
+        row_length = len(row)
         if self.width == 0:
-            self.width = rowLength
+            self.width = row_length
         else:
-            assert self.width == rowLength, \
+            assert self.width == row_length, \
                 "Row length %s differs from width %s, this is currently not \
-supported" % (rowLength, self.width)
+supported" % (row_length, self.width)
             
     def _add_row(self,row):
         self.rows.append(row)
@@ -72,6 +72,7 @@ def read_landscape(filepath):
     for line in open(filepath, "r"):
         landscape.add_row(line.strip('\n'))
     return landscape
+
 def _is_blank(char):
     """Determines whether a character is relevant for a bug specification.
     Currently we only ignore blanks (' ')."""
@@ -81,7 +82,7 @@ def read_bugspec(filepath, char_predicate=_is_blank):
     """Reads a bug specification from a file."""
 
     x = y = 0
-    xMax = xMin = yMax = yMin = None
+    x_max = x_min = y_max = y_min = None
     points = []
     
     for char in open(filepath, "r").read():
@@ -93,27 +94,27 @@ def read_bugspec(filepath, char_predicate=_is_blank):
         if char_predicate(char):
             points.append(Point(x, y, char))
 
-            xMax = max(xMax, x)
-            xMin = _get_lower(xMin, x)
-            yMax = max(yMax, y)
-            yMin = _get_lower(yMin, y)
+            x_max = max(x_max, x)
+            x_min = _get_lower(x_min, x)
+            y_max = max(y_max, y)
+            y_min = _get_lower(y_min, y)
 
         x += 1
     
-    _adapt_coordinates(points, xMin, yMin)
+    _adapt_coordinates(points, x_min, y_min)
 
-    width = xMax - xMin + 1
-    height = yMax - yMin + 1
+    width = x_max - x_min + 1
+    height = y_max - y_min + 1
         
     return BugSpec(width, height, set(points))
 
-def _adapt_coordinates(points, xMin, yMin):
+def _adapt_coordinates(points, x_min, y_min):
     # adapt coordinates to be relative to a rectangle only surrounding actual
     # bug points
-    if xMin | yMin:
+    if x_min | y_min:
         for p in points:
-            p.x -= xMin
-            p.y -= yMin
+            p.x -= x_min
+            p.y -= y_min
 
 def _get_lower(old, new):
     if old is None or old > new:
@@ -124,26 +125,28 @@ def count_bugs(bugfile, landscapefile):
     bugspec = read_bugspec(bugfile)
     landscape = read_landscape(landscapefile)
 
-    xOffset = 0
-    yOffset = 0
+    x_offset = 0
+    y_offset = 0
 
-    bugcounter = 0
+    bug_count = 0
     
-    while landscape.width >= bugspec.width + xOffset and \
-            landscape.height >= bugspec.height + yOffset:
-        allMatch = True
+    while landscape.width >= bugspec.width + x_offset and \
+            landscape.height >= bugspec.height + y_offset:
+        all_match = True
         for p in bugspec.points:
-            if landscape.rows[yOffset + p.y][xOffset + p.x] != p.val:
-                allMatch = False
+            if landscape.rows[y_offset + p.y][x_offset + p.x] != p.val:
+                all_match = False
                 break
 
-        if allMatch:
-            bugcounter += 1
+        if all_match:
+            bug_count += 1
 
-        if landscape.width == bugspec.width + xOffset:
-            xOffset = 0
-            yOffset += 1
+        if landscape.width == bugspec.width + x_offset:
+            x_offset = 0
+            y_offset += 1
         else:
-            xOffset += 1
+            x_offset += 1
     
-    return bugcounter
+    return bug_count
+
+

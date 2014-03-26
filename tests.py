@@ -89,8 +89,8 @@ class MainTests(unittest.TestCase):
         
     def test_read_bugspec(self):
         self._create_tempfile_with_lines("[]",
-                                                   "[]",
-                                                   "{}")
+                                         "[]",
+                                         "{}")
         bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 2)
@@ -120,8 +120,8 @@ class MainTests(unittest.TestCase):
 
     def test_read_bugspec_leading_trailing_empty_lines(self):
         self._create_tempfile_with_lines("",
-                                                   "!",
-                                                   "")
+                                         "!",
+                                         "")
         bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 1)
@@ -133,10 +133,10 @@ class MainTests(unittest.TestCase):
 
     def test_read_bugspec_whitespaces_all_around(self):
         self._create_tempfile_with_lines("",
-                                                   "   ",
-                                                   " ! ",
-                                                   "   ",
-                                                   "")
+                                         "   ",
+                                         " ! ",
+                                         "   ",
+                                         "")
         bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 1)
@@ -148,9 +148,9 @@ class MainTests(unittest.TestCase):
 
     def read_bugspec_relative_coords(self):
         self._create_tempfile_with_lines("   ",
-                                                   "  x",
-                                                   " x ",
-                                                   "   ")
+                                         "  x",
+                                         " x ",
+                                         "   ")
         bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 2)
@@ -162,7 +162,7 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.points, expectedPoints)
 
 class CountBugTests(unittest.TestCase):
-        
+    
     def test_sample(self):
         result = count_bugs("bug.txt", "landscape.txt")
         self.assertEquals(result, 3)

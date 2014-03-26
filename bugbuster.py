@@ -89,9 +89,9 @@ def read_bugspec(filepath):
         if _is_relevant_char(char):
             points.append(Point(x, y, char))
 
-            xMax = _get_higher(xMax, x)
+            xMax = max(xMax, x)
             xMin = _get_lower(xMin, x)
-            yMax = _get_higher(yMax, y)
+            yMax = max(yMax, y)
             yMin = _get_lower(yMin, y)
 
         x += 1
@@ -115,11 +115,6 @@ def _is_relevant_char(char):
 
 def _get_lower(old, new):
     if old is None or old > new:
-        return new
-    return old
-
-def _get_higher(old, new):
-    if old is None or old < new:
         return new
     return old
 

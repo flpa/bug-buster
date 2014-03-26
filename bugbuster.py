@@ -95,18 +95,21 @@ def read_bugspec(filepath):
             yMin = _get_lower(yMin, y)
 
         x += 1
+    
+    _adapt_coordinates(points, xMin, yMin)
 
+    width = xMax - xMin + 1
+    height = yMax - yMin + 1
+        
+    return BugSpec(width, height, set(points))
+
+def _adapt_coordinates(points, xMin, yMin):
     # adapt coordinates to be relative to a rectangle only surrounding actual
     # bug points
     if xMin | yMin:
         for p in points:
             p.x -= xMin
             p.y -= yMin
-
-    width = xMax - xMin + 1
-    height = yMax - yMin + 1
-        
-    return BugSpec(width, height, set(points))
 
 def _is_relevant_char(char):
     """Determines whether a character is relevant for a bug specification.

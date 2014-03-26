@@ -9,7 +9,7 @@
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
  - padding unfinished lines
-* TODOs [2/6]
+* TODOs [4/7]
   - [X] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
   - [-] edge case tests
@@ -18,8 +18,8 @@
   - [X] inheriting from 'object' yes/no?
   - [ ] closing file streams
   - [ ] prepared test files vs file generation?
-  - [ ] unify assertions
-  - [ ] variable naming style
+  - [X] unify assertions
+  - [X] variable naming style
 * Links
   http://pythonhosted.org/aafigure/appendix.html
   http://www.cs.berkeley.edu/~malik/papers/BMP-shape.pdf

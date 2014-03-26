@@ -44,60 +44,54 @@ class LandscapeTests(unittest.TestCase):
 from tempfile import NamedTemporaryFile
 
 class MainTests(unittest.TestCase):
+    def setUp(self):
+        self.tempfile = NamedTemporaryFile()
+    
+    def tearDown(self):
+        self.tempfile.close()
+    
     def _create_tempfile_with_lines(self, *lines):
-        tmp = NamedTemporaryFile()
         for line in lines:
-            tmp.write(line)
-            tmp.write('\n')
-        tmp.flush()
-        return tmp
+            self.tempfile.write(line)
+            self.tempfile.write('\n')
+        self.tempfile.flush()
 
     # TODO extract ReadLandscapeTests
     def test_read_landscape(self):
-        tmpfile = self._create_tempfile_with_lines("###", " - ")
-        landscape = read_landscape(tmpfile.name)
+        self._create_tempfile_with_lines("###", " - ")
+        landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
-        
-        tmpfile.close()
 
     def test_read_landscape_trailing_empty_line_is_ignored(self):
-        tmpfile = self._create_tempfile_with_lines("###", " - ", "")
-        landscape = read_landscape(tmpfile.name)
+        self._create_tempfile_with_lines("###", " - ", "")
+        landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
-        
-        tmpfile.close()
 
     def test_read_landscape_leading_blank_line_is_added(self):
-        tmpfile = self._create_tempfile_with_lines("   ", "###", " - ")
-        landscape = read_landscape(tmpfile.name)
+        self._create_tempfile_with_lines("   ", "###", " - ")
+        landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["   ", "###", " - "])
-        
-        tmpfile.close()
 
     def test_read_landscape_leading_empty_lines_are_ignored(self):
-        tmpfile = self._create_tempfile_with_lines("", "", "###", " - ")
-        landscape = read_landscape(tmpfile.name)
+        self._create_tempfile_with_lines("", "", "###", " - ")
+        landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
-        
-        tmpfile.close()
 
     def test_read_landscape_interjacent_empty_line_causes_error(self):
-        tmpfile = self._create_tempfile_with_lines("###", "", " - ")
+        self._create_tempfile_with_lines("###", "", " - ")
 
         # TODO should this raise another error?
-        self.assertRaises(AssertionError, read_landscape, tmpfile.name)
-
-        tmpfile.close()
+        self.assertRaises(AssertionError, read_landscape, self.tempfile.name)
         
     def test_read_bugspec(self):
-        tmpfile = self._create_tempfile_with_lines("[]",
+        self._create_tempfile_with_lines("[]",
                                                    "[]",
                                                    "{}")
-        bugspec = read_bugspec(tmpfile.name)
+        bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 2)
         self.assertEquals(bugspec.height, 3)
@@ -111,12 +105,10 @@ class MainTests(unittest.TestCase):
         expectedPoints.add(Point(1, 2, '}'))
 
         self.assertEquals(bugspec.points, expectedPoints)
-        
-        tmpfile.close()
 
     def test_read_bugspec_whitespace_ignored(self):
-        tmpfile = self._create_tempfile_with_lines("[ ]")
-        bugspec = read_bugspec(tmpfile.name)
+        self._create_tempfile_with_lines("[ ]")
+        bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 3)
         self.assertEquals(bugspec.height, 1)
@@ -125,14 +117,12 @@ class MainTests(unittest.TestCase):
         expectedPoints.add(Point(0, 0, '['))
         expectedPoints.add(Point(2, 0, ']'))
         self.assertEquals(bugspec.points, expectedPoints)
-        
-        tmpfile.close()
 
     def test_read_bugspec_leading_trailing_empty_lines(self):
-        tmpfile = self._create_tempfile_with_lines("",
+        self._create_tempfile_with_lines("",
                                                    "!",
                                                    "")
-        bugspec = read_bugspec(tmpfile.name)
+        bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 1)
         self.assertEquals(bugspec.height, 1)
@@ -140,16 +130,14 @@ class MainTests(unittest.TestCase):
         expectedPoints = set()
         expectedPoints.add(Point(0, 0, '!'))
         self.assertEquals(bugspec.points, expectedPoints)
-        
-        tmpfile.close()
 
     def test_read_bugspec_whitespaces_all_around(self):
-        tmpfile = self._create_tempfile_with_lines("",
+        self._create_tempfile_with_lines("",
                                                    "   ",
                                                    " ! ",
                                                    "   ",
                                                    "")
-        bugspec = read_bugspec(tmpfile.name)
+        bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 1)
         self.assertEquals(bugspec.height, 1)
@@ -157,15 +145,13 @@ class MainTests(unittest.TestCase):
         expectedPoints = set()
         expectedPoints.add(Point(0, 0, '!'))
         self.assertEquals(bugspec.points, expectedPoints)
-        
-        tmpfile.close()
 
     def read_bugspec_relative_coords(self):
-        tmpfile = self._create_tempfile_with_lines("   ",
+        self._create_tempfile_with_lines("   ",
                                                    "  x",
                                                    " x ",
                                                    "   ")
-        bugspec = read_bugspec(tmpfile.name)
+        bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, 2)
         self.assertEquals(bugspec.height, 2)
@@ -174,8 +160,6 @@ class MainTests(unittest.TestCase):
         expectedPoints.add(Point(1, 0, 'x'))
         expectedPoints.add(Point(0, 1, 'x'))
         self.assertEquals(bugspec.points, expectedPoints)
-        
-        tmpfile.close()
 
 class CountBugTests(unittest.TestCase):
         

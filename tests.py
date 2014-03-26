@@ -69,7 +69,13 @@ class MainTests(unittest.TestCase):
     def test_read_landscape_interjacent_empty_line_causes_error(self):
         self._create_tempfile_with_lines("###", "", " - ")
         self.assertRaises(AssertionError, read_landscape, self.tempfile.name)
-        
+
+    def _pointset_from_tuples(self, *tuples):
+        newset = set()
+        for t in tuples:
+            newset.add(Point(*t))
+        return newset
+
     def test_read_bugspec(self):
         self._create_tempfile_with_lines("[]",
                                          "[]",
@@ -79,13 +85,12 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.width, 2)
         self.assertEquals(bugspec.height, 3)
 
-        expectedPoints = set()
-        expectedPoints.add(Point(0, 0, '['))
-        expectedPoints.add(Point(1, 0, ']'))
-        expectedPoints.add(Point(0, 1, '['))
-        expectedPoints.add(Point(1, 1, ']'))
-        expectedPoints.add(Point(0, 2, '{'))
-        expectedPoints.add(Point(1, 2, '}'))
+        expectedPoints = self._pointset_from_tuples((0, 0, '['),
+                                                    (1, 0, ']'),
+                                                    (0, 1, '['),
+                                                    (1, 1, ']'),
+                                                    (0, 2, '{'),
+                                                    (1, 2, '}'))
 
         self.assertEquals(bugspec.points, expectedPoints)
 
@@ -96,9 +101,9 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.width, 3)
         self.assertEquals(bugspec.height, 1)
 
-        expectedPoints = set()
-        expectedPoints.add(Point(0, 0, '['))
-        expectedPoints.add(Point(2, 0, ']'))
+        expectedPoints = self._pointset_from_tuples((0, 0, '['),
+                                                    (2, 0, ']'))
+
         self.assertEquals(bugspec.points, expectedPoints)
 
     def test_read_bugspec_leading_trailing_empty_lines(self):
@@ -110,8 +115,7 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.width, 1)
         self.assertEquals(bugspec.height, 1)
 
-        expectedPoints = set()
-        expectedPoints.add(Point(0, 0, '!'))
+        expectedPoints = self._pointset_from_tuples((0, 0, '!'))
         self.assertEquals(bugspec.points, expectedPoints)
 
     def test_read_bugspec_whitespaces_all_around(self):
@@ -125,8 +129,7 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.width, 1)
         self.assertEquals(bugspec.height, 1)
 
-        expectedPoints = set()
-        expectedPoints.add(Point(0, 0, '!'))
+        expectedPoints = self._pointset_from_tuples((0, 0, '!'))
         self.assertEquals(bugspec.points, expectedPoints)
 
     def read_bugspec_relative_coords(self):
@@ -139,9 +142,8 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.width, 2)
         self.assertEquals(bugspec.height, 2)
 
-        expectedPoints = set()
-        expectedPoints.add(Point(1, 0, 'x'))
-        expectedPoints.add(Point(0, 1, 'x'))
+        expectedPoints = self._pointset_from_tuples((1, 0, 'x'),
+                                                    (0, 1, 'x'))
         self.assertEquals(bugspec.points, expectedPoints)
 
 class CountBugsTests(unittest.TestCase):

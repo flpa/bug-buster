@@ -73,8 +73,12 @@ rows since the last content row. This is currently not supported."
         
 def read_landscape(filepath):
     landscape = Landscape()
-    for line in open(filepath, "r"):
-        landscape.add_row(line.strip('\n'))
+    f = open(filepath, "r")
+    try:
+        for line in f:
+            landscape.add_row(line.strip('\n'))
+    finally:
+        f.close()
     return landscape
 
 def _is_blank(char):
@@ -99,7 +103,6 @@ def read_bugspec(filepath, char_predicate=_is_blank):
 
             if char_predicate(char):
                 points.append(Point(x, y, char))
-
                 x_max = max(x_max, x)
                 x_min = _get_lower(x_min, x)
                 y_max = max(y_max, y)

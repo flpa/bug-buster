@@ -46,31 +46,42 @@ class TempFileTestCase(unittest.TestCase):
     
 class ReadLandscapeTests(TempFileTestCase):
     def test_simple(self):
-        self._create_tempfile_with_lines("###", " - ")
+        self._create_tempfile_with_lines("###",
+                                         " - ")
         landscape = read_landscape(self.tempfile.name)
-
-        self.assertEquals(landscape.rows, ["###", " - "])
+        self.assertEquals(landscape.rows, ["###",
+                                           " - "])
 
     def test_trailing_empty_line_is_ignored(self):
-        self._create_tempfile_with_lines("###", " - ", "")
+        self._create_tempfile_with_lines("###",
+                                         " - ",
+                                         "")
         landscape = read_landscape(self.tempfile.name)
-
-        self.assertEquals(landscape.rows, ["###", " - "])
+        self.assertEquals(landscape.rows, ["###",
+                                           " - "])
 
     def test_leading_blank_line_is_added(self):
-        self._create_tempfile_with_lines("   ", "###", " - ")
+        self._create_tempfile_with_lines("   ",
+                                         "###",
+                                         " - ")
         landscape = read_landscape(self.tempfile.name)
-
-        self.assertEquals(landscape.rows, ["   ", "###", " - "])
+        self.assertEquals(landscape.rows, ["   ",
+                                           "###",
+                                           " - "])
 
     def test_leading_empty_lines_are_ignored(self):
-        self._create_tempfile_with_lines("", "", "###", " - ")
+        self._create_tempfile_with_lines("",
+                                         "",
+                                         "###",
+                                         " - ")
         landscape = read_landscape(self.tempfile.name)
-
-        self.assertEquals(landscape.rows, ["###", " - "])
+        self.assertEquals(landscape.rows, ["###",
+                                           " - "])
 
     def test_interjacent_empty_line_causes_error(self):
-        self._create_tempfile_with_lines("###", "", " - ")
+        self._create_tempfile_with_lines("###",
+                                         "",
+                                         " - ")
         self.assertRaises(AssertionError, read_landscape, self.tempfile.name)
 
 class ReadBugspecTests(TempFileTestCase):

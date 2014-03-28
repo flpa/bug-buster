@@ -28,48 +28,52 @@ class LandscapeTests(unittest.TestCase):
 
 from tempfile import NamedTemporaryFile
 
-class MainTests(unittest.TestCase):
+class TempFileTestCase(unittest.TestCase):
+    """Extension of unittest.TestCase that provides a 'tempfile' via
+    implementations of setUp and tearDown() as well as the utility method
+    _create_tempfile_with_lines."""
     def setUp(self):
         self.tempfile = NamedTemporaryFile()
     
     def tearDown(self):
         self.tempfile.close()
-    
+
     def _create_tempfile_with_lines(self, *lines):
         for line in lines:
             self.tempfile.write(line)
             self.tempfile.write('\n')
         self.tempfile.flush()
-
-    # TODO extract ReadLandscapeTests
-    def test_read_landscape(self):
+    
+class ReadLandscapeTests(TempFileTestCase):
+    def test_simple(self):
         self._create_tempfile_with_lines("###", " - ")
         landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
 
-    def test_read_landscape_trailing_empty_line_is_ignored(self):
+    def test_trailing_empty_line_is_ignored(self):
         self._create_tempfile_with_lines("###", " - ", "")
         landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
 
-    def test_read_landscape_leading_blank_line_is_added(self):
+    def test_leading_blank_line_is_added(self):
         self._create_tempfile_with_lines("   ", "###", " - ")
         landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["   ", "###", " - "])
 
-    def test_read_landscape_leading_empty_lines_are_ignored(self):
+    def test_leading_empty_lines_are_ignored(self):
         self._create_tempfile_with_lines("", "", "###", " - ")
         landscape = read_landscape(self.tempfile.name)
 
         self.assertEquals(landscape.rows, ["###", " - "])
 
-    def test_read_landscape_interjacent_empty_line_causes_error(self):
+    def test_interjacent_empty_line_causes_error(self):
         self._create_tempfile_with_lines("###", "", " - ")
         self.assertRaises(AssertionError, read_landscape, self.tempfile.name)
 
+class ReadBugspecTests(TempFileTestCase):
     def _pointset_from_tuples(self, *tuples):
         newset = set()
         for t in tuples:
@@ -83,7 +87,7 @@ class MainTests(unittest.TestCase):
         self.assertEquals(bugspec.height, height)
         self.assertEquals(bugspec.points, points)
 
-    def test_read_bugspec(self):
+    def test_simple(self):
         self._create_tempfile_with_lines("[]",
                                          "[]",
                                          "{}")
@@ -96,14 +100,14 @@ class MainTests(unittest.TestCase):
 
         self._check_width_height_points(2, 3, expected_points)
 
-    def test_read_bugspec_whitespace_ignored(self):
+    def test_whitespace_ignored(self):
         self._create_tempfile_with_lines("[ ]")
         expected_points = self._pointset_from_tuples((0, 0, '['),
                                                      (2, 0, ']'))
 
         self._check_width_height_points(3, 1, expected_points)
         
-    def test_read_bugspec_leading_trailing_empty_lines(self):
+    def test_leading_trailing_empty_lines(self):
         self._create_tempfile_with_lines("",
                                          "!",
                                          "")
@@ -111,7 +115,7 @@ class MainTests(unittest.TestCase):
 
         self._check_width_height_points(1, 1, expected_points)
 
-    def test_read_bugspec_whitespaces_all_around(self):
+    def test_whitespaces_all_around(self):
         self._create_tempfile_with_lines("",
                                          "   ",
                                          " ! ",
@@ -121,7 +125,7 @@ class MainTests(unittest.TestCase):
 
         self._check_width_height_points(1, 1, expected_points)
         
-    def read_bugspec_relative_coords(self):
+    def test_relative_coords(self):
         self._create_tempfile_with_lines("   ",
                                          "  x",
                                          " x ",

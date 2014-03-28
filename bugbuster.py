@@ -87,6 +87,7 @@ def _is_blank(char):
 
 def read_bugspec(filepath, char_predicate=_is_blank):
     """Reads a bug specification from a file."""
+    # TODO docstring
 
     x = y = 0
     x_max = x_min = y_max = y_min = None
@@ -123,6 +124,7 @@ def read_bugspec(filepath, char_predicate=_is_blank):
 def _adapt_coordinates(points, x_min, y_min):
     # adapt coordinates to be relative to a rectangle only surrounding actual
     # bug points
+    # TODO convert to proper docstring
     if x_min | y_min:
         for p in points:
             p.x -= x_min

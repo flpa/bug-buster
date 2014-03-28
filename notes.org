@@ -9,14 +9,15 @@
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
  - padding unfinished lines
-* TODOs [4/7]
+* TODOs [5/8]
   - [X] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
   - [-] edge case tests
     - [X] landscape smaller than
     - [ ] empty bug
+  - [ ] test using different character-predicate
   - [X] inheriting from 'object' yes/no?
-  - [ ] closing file streams
+  - [X] closing file streams
   - [ ] prepared test files vs file generation?
   - [X] unify assertions
   - [X] variable naming style

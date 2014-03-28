@@ -82,8 +82,7 @@ def read_landscape(filepath):
     return landscape
 
 def _is_blank(char):
-    """Determines whether a character is relevant for a bug specification.
-    Currently we only ignore blanks (' ')."""
+    """Determines whether a character is equal to ' '."""
     return char != ' '
 
 def read_bugspec(filepath, char_predicate=_is_blank):

@@ -88,18 +88,18 @@ class MainTests(unittest.TestCase):
                                          "[]",
                                          "{}")
         expected_points = self._pointset_from_tuples((0, 0, '['),
-                                                    (1, 0, ']'),
-                                                    (0, 1, '['),
-                                                    (1, 1, ']'),
-                                                    (0, 2, '{'),
-                                                    (1, 2, '}'))
+                                                     (1, 0, ']'),
+                                                     (0, 1, '['),
+                                                     (1, 1, ']'),
+                                                     (0, 2, '{'),
+                                                     (1, 2, '}'))
 
         self._check_width_height_points(2, 3, expected_points)
 
     def test_read_bugspec_whitespace_ignored(self):
         self._create_tempfile_with_lines("[ ]")
         expected_points = self._pointset_from_tuples((0, 0, '['),
-                                                    (2, 0, ']'))
+                                                     (2, 0, ']'))
 
         self._check_width_height_points(3, 1, expected_points)
         
@@ -127,7 +127,7 @@ class MainTests(unittest.TestCase):
                                          " x ",
                                          "   ")
         expected_points = self._pointset_from_tuples((1, 0, 'x'),
-                                                    (0, 1, 'x'))
+                                                     (0, 1, 'x'))
 
         self._check_width_height_points(2, 2, expected_points)
 

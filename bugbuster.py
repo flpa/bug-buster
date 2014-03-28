@@ -88,22 +88,27 @@ def read_bugspec(filepath, char_predicate=_is_blank):
     x = y = 0
     x_max = x_min = y_max = y_min = None
     points = []
-    
-    for char in open(filepath, "r").read():
-        if char == '\n':
-            y += 1
-            x = 0
-            continue
 
-        if char_predicate(char):
-            points.append(Point(x, y, char))
+    f = open(filepath, "r")
+    try:
+        for char in f.read():
+            if char == '\n':
+                y += 1
+                x = 0
+                continue
 
-            x_max = max(x_max, x)
-            x_min = _get_lower(x_min, x)
-            y_max = max(y_max, y)
-            y_min = _get_lower(y_min, y)
+            if char_predicate(char):
+                points.append(Point(x, y, char))
 
-        x += 1
+                x_max = max(x_max, x)
+                x_min = _get_lower(x_min, x)
+                y_max = max(y_max, y)
+                y_min = _get_lower(y_min, y)
+
+            x += 1
+    finally:
+        # using the 'with' statement would look way better but require 2.5+
+        f.close()
     
     _adapt_coordinates(points, x_min, y_min)
 

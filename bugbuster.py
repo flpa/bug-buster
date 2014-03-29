@@ -1,15 +1,21 @@
-class Point(object): #TODO naming
-    """A single point in a bug specification, consisting of x/y coordinates \
-    and a value 'val'."""
+class Point(object):
 
-    def __init__(self, x, y, val):
-        self.val = val
+    """A point in a bug specification.
+
+    Instance variables:
+    x
+    y
+    value
+    """
+
+    def __init__(self, x, y, value):
+        self.value = value
         self.x = x
         self.y = y
 
     def __eq__(self, other):
         """Overridden equality check comparing class and attributes."""
-        return (isinstance(other, self.__class__) and self.val == other.val
+        return (isinstance(other, self.__class__) and self.value == other.value
                 and self.x == other.x and self.y == other.y)
 
     def __ne__(self, other):
@@ -17,14 +23,25 @@ class Point(object): #TODO naming
         return not self.__eq__(other)
 
     def __hash__(self):
-        return hash(self.val) + hash(self.x) + hash(self.y)
+        return hash(self.value) + hash(self.x) + hash(self.y)
 
     def __repr__(self):
-        return "%s(%s/%s)" % (self.val, self.x, self.y)
+        return "%s(%s/%s)" % (self.value, self.x, self.y)
 
 class BugSpec(object):
-    """Represents a bug specification and holds width, height and the points \
-    the bug consists of."""
+
+    """A simple data object that holds the specification of a bug.
+
+    The representation is based on a virtual rectangle encircling the bug.
+    Therefore, this class consists of a set of points that represents the
+    features of the bug as well as width and height of the rectangle.
+    Point coordinates are relative to the rectangle.
+    
+    Instance variables:
+    width -- width of the virtual rectangle
+    height -- height of the virtual rectangle
+    points -- the set of points
+    """
 
     def __init__(self, width, height, points):
         self.width = width
@@ -32,9 +49,20 @@ class BugSpec(object):
         self.points = points
 
 class Landscape(object):
-    """A class representing a landscape to be scanned for bugs. It consists \
-    of a collection of rows of equal length, and holds information about the \
-    total width and height."""
+    
+    """A class representing a landscape to be scanned for bugs.
+    
+    A landscape consists of a collection of rows of equal length, and holds 
+    information about the total width and height.
+
+    Instance variables:
+    width
+    height
+    rows
+
+    Methods:
+    add_row
+    """
 
     def __init__(self):
         self.width = 0
@@ -72,6 +100,8 @@ rows since the last content row. This is currently not supported."
 # main part
         
 def read_landscape(filepath):
+    """Creates a Landscape by parsing the given file."""
+    
     landscape = Landscape()
     f = open(filepath, "r")
     try:
@@ -86,8 +116,12 @@ def _is_blank(char):
     return char != ' '
 
 def read_bugspec(filepath, char_predicate=_is_blank):
-    """Reads a bug specification from a file."""
-    # TODO docstring
+    """Reads a bug specification from a file.
+
+    Keyword arguments:
+    char_predicate -- the predicate function that decides whether a character
+    is relevant for the bug specification (default is_blank)
+    """
 
     x = y = 0
     x_max = x_min = y_max = y_min = None
@@ -124,9 +158,14 @@ def read_bugspec(filepath, char_predicate=_is_blank):
     return BugSpec(width, height, set(points))
 
 def _adapt_coordinates(points, x_min, y_min):
-    # adapt coordinates to be relative to a rectangle only surrounding actual
-    # bug points
-    # TODO convert to proper docstring
+    """Adapt coordinates in 'points' according to 'x_min' and 'y_min".
+
+    Adapting means modifying the point coordinates so that they reflect
+    their positions in a virtual rectangle encircling the points, e.g.
+    when invoked with points = ((1 1) (1 2)), x_min = 1, y_min = 1, points
+    will be modified to be ((0 0) (0 1)).
+    """
+
     if x_min | y_min:
         for p in points:
             p.x -= x_min
@@ -150,7 +189,7 @@ def count_bugs(bugfile, landscapefile):
             landscape.height >= bugspec.height + y_offset:
         all_match = True
         for p in bugspec.points:
-            if landscape.rows[y_offset + p.y][x_offset + p.x] != p.val:
+            if landscape.rows[y_offset + p.y][x_offset + p.x] != p.value:
                 all_match = False
                 break
 

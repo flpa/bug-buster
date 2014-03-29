@@ -153,29 +153,29 @@ class ReadBugspecTests(TempFileTestCase):
 
 class CountBugsTests(unittest.TestCase):
     def _protobug_test(self, landscapefile, bugcount):
-        result = count_bugs("bug.txt", landscapefile)
+        result = count_bugs("tests/res/bug.txt", "tests/res/" + landscapefile)
         self.assertEquals(result, bugcount)        
     
     def test_sample(self):
         self._protobug_test("landscape.txt", 3)
 
     def test_exactly_one_bug_fits_in_landscape(self):
-        self._protobug_test("tests/res/landscape-single-bug-size.txt", 1)
+        self._protobug_test("landscape-single-bug-size.txt", 1)
 
     def test_landscape_smaller_than_bug(self):
-        self._protobug_test("tests/res/landscape-smaller-than-bug.txt", 0)
+        self._protobug_test("landscape-smaller-than-bug.txt", 0)
 
     def test_partial_bugs(self):
-        self._protobug_test("tests/res/landscape-partial-bugs.txt", 0)
+        self._protobug_test("landscape-partial-bugs.txt", 0)
 
     def test_bugs_next_to_each_other(self):
-        self._protobug_test("tests/res/landscape-bugs-next-to-each-other.txt", 3)
+        self._protobug_test("landscape-bugs-next-to-each-other.txt", 3)
 
     def test_empty_line(self):
-        self._protobug_test("tests/res/landscape-empty-line.txt", 2)
+        self._protobug_test("landscape-empty-line.txt", 2)
 
     def test_other_symbols(self):
-        self._protobug_test("tests/res/landscape-other-symbols.txt", 3)
+        self._protobug_test("landscape-other-symbols.txt", 3)
         
 if __name__ == '__main__':
     unittest.main()

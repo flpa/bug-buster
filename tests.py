@@ -152,10 +152,13 @@ class ReadBugspecTests(TempFileTestCase):
         self.assertRaises(AssertionError, read_bugspec, self.tempfile.name)
 
 class CountBugsTests(unittest.TestCase):
-    def _protobug_test(self, landscapefile, bugcount):
-        result = count_bugs("tests/res/bug.txt", "tests/res/" + landscapefile)
+    def _test(self, bugfile, landscapefile, bugcount):
+        result = count_bugs("tests/res/" + bugfile, "tests/res/" + landscapefile)
         self.assertEquals(result, bugcount)        
     
+    def _protobug_test(self, landscapefile, bugcount):
+        self._test("bug.txt", landscapefile, bugcount)
+        
     def test_sample(self):
         self._protobug_test("landscape.txt", 3)
 
@@ -176,6 +179,9 @@ class CountBugsTests(unittest.TestCase):
 
     def test_other_symbols(self):
         self._protobug_test("landscape-other-symbols.txt", 3)
+
+    def test_onelinebug(self):
+        self._test("onelinebug.txt", "onelinebug-landscape.txt", 3)
         
 if __name__ == '__main__':
     unittest.main()

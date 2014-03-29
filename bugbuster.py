@@ -184,19 +184,13 @@ def count_bugs(bugfile, landscapefile):
     y_offset = 0
 
     bug_count = 0
-    
-    while landscape.width >= bugspec.width + x_offset and \
-            landscape.height >= bugspec.height + y_offset:
-        all_match = True
-        for p in bugspec.points:
-            if landscape.rows[y_offset + p.y][x_offset + p.x] != p.value:
-                all_match = False
-                break
 
-        if all_match:
+    # TODO instance vars reduce param passing
+    while _in_landscape(landscape, bugspec, x_offset, y_offset):
+        if _all_points_match(landscape, bugspec, x_offset, y_offset):
             bug_count += 1
 
-        if landscape.width == bugspec.width + x_offset:
+        if _reached_row_border(landscape, bugspec, x_offset):
             x_offset = 0
             y_offset += 1
         else:
@@ -204,4 +198,13 @@ def count_bugs(bugfile, landscapefile):
     
     return bug_count
 
+def _in_landscape(landscape, bugspec, x_offset, y_offset):
+    return (landscape.width >= bugspec.width + x_offset and
+            landscape.height >= bugspec.height + y_offset)
 
+def _all_points_match(landscape, bugspec, x_offset, y_offset):
+    return all(landscape.rows[y_offset + p.y][x_offset + p.x] == p.value
+               for p in bugspec.points)
+
+def _reached_row_border(landscape, bugspec, x_offset):
+    return landscape.width == bugspec.width + x_offset

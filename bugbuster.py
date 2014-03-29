@@ -110,8 +110,10 @@ def read_bugspec(filepath, char_predicate=_is_blank):
 
             x += 1
     finally:
-        # using the 'with' statement would look way better but require 2.5+
+        # using the 'with' statement would look way better but requires 2.5+
         f.close()
+
+    assert points, "The bug specification contains no relevant points!"
     
     _adapt_coordinates(points, x_min, y_min)
 

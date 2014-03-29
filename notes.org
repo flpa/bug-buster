@@ -9,12 +9,12 @@
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
  - padding unfinished lines
-* TODOs [5/8]
+* TODOs [6/8]
   - [X] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
-  - [-] edge case tests
+  - [X] edge case tests
     - [X] landscape smaller than
-    - [ ] empty bug
+    - [X] empty bug
   - [ ] test using different character-predicate
   - [X] inheriting from 'object' yes/no?
   - [X] closing file streams

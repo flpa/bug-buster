@@ -146,6 +146,11 @@ class ReadBugspecTests(TempFileTestCase):
 
         self._check_width_height_points(2, 2, expected_points)
 
+    def test_empty_bug_causes_assertion_error(self):
+        self._create_tempfile_with_lines("")
+        
+        self.assertRaises(AssertionError, read_bugspec, self.tempfile.name)
+
 class CountBugsTests(unittest.TestCase):
     def _protobug_test(self, landscapefile, bugcount):
         result = count_bugs("bug.txt", landscapefile)

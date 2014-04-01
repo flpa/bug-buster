@@ -91,8 +91,12 @@ class ReadBugspecTests(TempFileTestCase):
             newset.add(Point(*t))
         return newset
 
-    def _check_width_height_points(self, width, height, points):
-        bugspec = read_bugspec(self.tempfile.name)
+    def _check_width_height_points(self, width, height, points, predicate=None):
+
+        if predicate:
+            bugspec = read_bugspec(self.tempfile.name, predicate)
+        else:
+            bugspec = read_bugspec(self.tempfile.name)
 
         self.assertEquals(bugspec.width, width)
         self.assertEquals(bugspec.height, height)
@@ -151,6 +155,15 @@ class ReadBugspecTests(TempFileTestCase):
         
         self.assertRaises(AssertionError, read_bugspec, self.tempfile.name)
 
+    def test_custom_predicate(self):
+        self._create_tempfile_with_lines("[| |]")
+        expected_points = self._pointset_from_tuples((0, 0, '['),
+                                                     (2, 0, ' '),
+                                                     (4, 0, ']'))
+        no_pipe_predicate = lambda x: x != '|'
+        
+        self._check_width_height_points(5, 1, expected_points, no_pipe_predicate)
+        
 class CountBugsTests(unittest.TestCase):
     def _test(self, bugfile, landscapefile, bugcount):
         result = count_bugs("tests/res/" + bugfile, "tests/res/" + landscapefile)

@@ -125,7 +125,7 @@ def _is_not_blank(char):
     """Determines whether a character is not equal to ' '."""
     return char != ' '
 
-def read_bugspec(filepath, char_predicate=_is_blank):
+def read_bugspec(filepath, char_predicate=_is_not_blank):
     """Reads a bug specification from a file.
 
     Keyword arguments:

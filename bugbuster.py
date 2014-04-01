@@ -30,7 +30,7 @@ class Point(object):
 
 class BugSpec(object):
 
-    """A simple data object that holds the specification of a bug.
+    """A data object that holds the distinctive features of a bug.
 
     The representation is based on a virtual rectangle encircling the bug.
     Therefore, this class consists of a set of points that represents the
@@ -52,7 +52,7 @@ class Landscape(object):
     
     """A class representing a landscape to be scanned for bugs.
     
-    A landscape consists of a collection of rows of equal length, and holds 
+    A landscape consists of a collection of rows of equal length and holds 
     information about the total width and height.
 
     Instance variables:
@@ -71,6 +71,16 @@ class Landscape(object):
         self._interjacent_empty_rows = []
 
     def add_row(self, row):
+        
+        """Add a row to the landscape.
+
+        If 'row' is the first non-empty row, this initializes the width of
+        the landscape. Otherwise, the width of the row is verified.
+
+        Leading and trailing empty rows are ignored. Interjacent empty
+        rows cause an AssertionError.
+        """
+        
         if row:
             self._verify_no_interjacent_empty_rows()
             self._set_or_verify_width(row)
@@ -78,20 +88,20 @@ class Landscape(object):
         elif self.rows:
             self._interjacent_empty_rows.append(row)
         
+    def _verify_no_interjacent_empty_rows(self):
+        assert not self._interjacent_empty_rows, "There have been empty \
+rows since the last content row. This is currently not supported!"
+
     def _set_or_verify_width(self, row):
         row_length = len(row)
         if self.width:
             self._verify_width(row_length)
         else:
             self.width = row_length
-
-    def _verify_no_interjacent_empty_rows(self):
-        assert not self._interjacent_empty_rows, "There have been empty \
-rows since the last content row. This is currently not supported."
             
     def _verify_width(self, row_length):
         assert self.width == row_length, "Row length %s differs from width %s,\
- this is currently not supported" % (row_length, self.width)
+ this is currently not supported!" % (row_length, self.width)
             
     def _add_row(self,row):
         self.rows.append(row)
@@ -111,8 +121,8 @@ def read_landscape(filepath):
         f.close()
     return landscape
 
-def _is_blank(char):
-    """Determines whether a character is equal to ' '."""
+def _is_not_blank(char):
+    """Determines whether a character is not equal to ' '."""
     return char != ' '
 
 def read_bugspec(filepath, char_predicate=_is_blank):

@@ -9,7 +9,8 @@ def read_landscape(filepath):
     f = open(filepath, "r")
     try:
         for line in f:
-            landscape.add_row(line.strip('\n'))
+            line_content = line.strip('\n').strip('\r')
+            landscape.add_row(line_content)
     finally:
         f.close()
     return landscape
@@ -23,7 +24,7 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
 
     Keyword arguments:
     char_predicate -- the predicate function that decides whether a character
-    is relevant for the bug specification (default is_blank)
+    is relevant for the bug specification (default: is_blank)
     """
 
     x = y = 0
@@ -33,6 +34,8 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
     f = open(filepath, "r")
     try:
         for char in f.read():
+            if char == '\r':
+                continue
             if char == '\n':
                 y += 1
                 x = 0

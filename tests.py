@@ -1,7 +1,13 @@
+"""tests.py: Tests for bugbuster"""
+
 import unittest
+from tempfile import NamedTemporaryFile
 from bugbuster import *
 
 class LandscapeTests(unittest.TestCase):
+
+    """Tests for model.Landscape"""
+    
     def _init_simple(self):
         landscape = Landscape()
         landscape.add_row("foo")
@@ -26,12 +32,14 @@ class LandscapeTests(unittest.TestCase):
 
         self.assertRaises(AssertionError, landscape.add_row, "way longer row")
 
-from tempfile import NamedTemporaryFile
-
 class TempFileTestCase(unittest.TestCase):
-    """Extension of unittest.TestCase that provides a 'tempfile' via
+    
+    """An extended testcase base class providing a temporary.
+
+    Extends unittest.TestCase and provides a 'tempfile' via
     implementations of setUp and tearDown() as well as the utility method
     _create_tempfile_with_lines."""
+    
     def setUp(self):
         self.tempfile = NamedTemporaryFile()
     
@@ -45,6 +53,9 @@ class TempFileTestCase(unittest.TestCase):
         self.tempfile.flush()
     
 class ReadLandscapeTests(TempFileTestCase):
+
+    """Tests for bugbuster.read_landscape."""
+    
     def test_simple(self):
         self._create_tempfile_with_lines("###",
                                          " - ")
@@ -85,6 +96,9 @@ class ReadLandscapeTests(TempFileTestCase):
         self.assertRaises(AssertionError, read_landscape, self.tempfile.name)
 
 class ReadBugspecTests(TempFileTestCase):
+
+    """Tests for bugbuster.read_bugspec."""
+    
     def _pointset_from_tuples(self, *tuples):
         newset = set()
         for t in tuples:
@@ -165,6 +179,9 @@ class ReadBugspecTests(TempFileTestCase):
         self._check_width_height_points(5, 1, expected_points, no_pipe_predicate)
         
 class CountBugsTests(unittest.TestCase):
+
+    """Tests for bugbuster.count_bugs."""
+    
     def _test(self, bugfile, landscapefile, bugcount):
         result = count_bugs("test-res/" + bugfile, "test-res/" + landscapefile)
         self.assertEquals(result, bugcount)        

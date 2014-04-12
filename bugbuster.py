@@ -1,3 +1,5 @@
+"""bugbuster.py: Main file of bugbuster."""
+
 from model import *
         
 def read_landscape(filepath):

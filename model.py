@@ -1,3 +1,5 @@
+"""model.py: The class definitions for bugbuster."""
+
 class Point(object):
 
     """A point in a bug specification.
@@ -80,7 +82,6 @@ class Landscape(object):
         Leading and trailing empty rows are ignored. Interjacent empty
         rows cause an AssertionError.
         """
-        
         if row:
             self._verify_no_interjacent_empty_rows()
             self._set_or_verify_width(row)

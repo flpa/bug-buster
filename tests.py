@@ -215,7 +215,7 @@ class CountBugsTests(unittest.TestCase):
         self._test("onelinebug.txt", "onelinebug-landscape.txt", 3)
 
     def test_windows_bug(self):
-        self._test("winbug.txt", "winbug-landscape.txt", 1)
+        self._test("windowsbug.txt", "windowsbug-landscape.txt", 1)
 
     def test_umlaut_bug(self):
         self._test("umlautbug.txt", "umlautbug-landscape.txt", 1)

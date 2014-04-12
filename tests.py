@@ -166,7 +166,7 @@ class ReadBugspecTests(TempFileTestCase):
         
 class CountBugsTests(unittest.TestCase):
     def _test(self, bugfile, landscapefile, bugcount):
-        result = count_bugs("tests/res/" + bugfile, "tests/res/" + landscapefile)
+        result = count_bugs("test-res/" + bugfile, "test-res/" + landscapefile)
         self.assertEquals(result, bugcount)        
     
     def _protobug_test(self, landscapefile, bugcount):

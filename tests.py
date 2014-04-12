@@ -37,7 +37,7 @@ class TempFileTestCase(unittest.TestCase):
     """An extended testcase base class providing a temporary.
 
     Extends unittest.TestCase and provides a 'tempfile' via
-    implementations of setUp and tearDown() as well as the utility method
+    implementations of setUp() and tearDown() as well as the utility method
     _create_tempfile_with_lines."""
     
     def setUp(self):
@@ -47,6 +47,7 @@ class TempFileTestCase(unittest.TestCase):
         self.tempfile.close()
 
     def _create_tempfile_with_lines(self, *lines):
+        """Writes 'lines' to the temp file, adding a newline after each line."""
         for line in lines:
             self.tempfile.write(line)
             self.tempfile.write('\n')
@@ -212,6 +213,9 @@ class CountBugsTests(unittest.TestCase):
 
     def test_onelinebug(self):
         self._test("onelinebug.txt", "onelinebug-landscape.txt", 3)
+
+    def test_windows_bug(self):
+        self._test("winbug.txt", "winbug-landscape.txt", 1)
         
 if __name__ == '__main__':
     unittest.main()

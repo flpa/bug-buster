@@ -9,7 +9,7 @@
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
  - padding unfinished lines
-* TODOs [8/10]
+* TODOs [9/10]
   - [X] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
   - [X] edge case tests
@@ -18,7 +18,8 @@
   - [X] test using different character-predicate
   - [X] inheriting from 'object' yes/no?
   - [X] closing file streams
-  - [ ] prepared test files vs file generation?
+  - [X] prepared test files vs file generation?
+    I think it's okay to use generated files where it's readable in code, and prepared files otherwise
   - [X] unify assertions
   - [X] variable naming style
   - [ ] unicode?

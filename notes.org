@@ -9,7 +9,7 @@
  - memory usage: whole landscape in-memory?
  - colorized output for detected bugs
  - padding unfinished lines
-* TODOs [9/10]
+* TODOs [10/10]
   - [X] input sanity checks
     (e.g. only lines of equal length - or fill with blanks?)
   - [X] edge case tests
@@ -22,7 +22,7 @@
     I think it's okay to use generated files where it's readable in code, and prepared files otherwise
   - [X] unify assertions
   - [X] variable naming style
-  - [ ] unicode?
+  - [X] unicode?
   - [X] windows newlines?
 * Links
   http://pythonhosted.org/aafigure/appendix.html

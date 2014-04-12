@@ -216,6 +216,9 @@ class CountBugsTests(unittest.TestCase):
 
     def test_windows_bug(self):
         self._test("winbug.txt", "winbug-landscape.txt", 1)
+
+    def test_umlaut_bug(self):
+        self._test("umlautbug.txt", "umlautbug-landscape.txt", 1)
         
 if __name__ == '__main__':
     unittest.main()

@@ -1,12 +1,14 @@
 """bugbuster.py: Main file of bugbuster."""
 
+import codecs
 from model import *
         
 def read_landscape(filepath):
     """Creates a Landscape by parsing the given file."""
     
     landscape = Landscape()
-    f = open(filepath, "r")
+
+    f = codecs.open(filepath, "r", "utf-8")
     try:
         for line in f:
             line_content = line.strip('\n').strip('\r')
@@ -31,7 +33,7 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
     x_max = x_min = y_max = y_min = None
     points = []
 
-    f = open(filepath, "r")
+    f = codecs.open(filepath, "r", "utf-8")
     try:
         for char in f.read():
             if char == '\r':

@@ -5,7 +5,6 @@ from model import *
         
 def read_landscape(filepath):
     """Creates a Landscape by parsing the given file."""
-    
     landscape = Landscape()
 
     f = codecs.open(filepath, "r", "utf-8")
@@ -28,9 +27,8 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
     char_predicate -- the predicate function that decides whether a character
     is relevant for the bug specification (default: is_blank)
     """
-
-    x = y = 0
-    x_max = x_min = y_max = y_min = None
+    x = y = x_max = y_max = 0
+    x_min = y_min = None
     points = []
 
     f = codecs.open(filepath, "r", "utf-8")
@@ -65,6 +63,11 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
         
     return BugSpec(width, height, set(points))
 
+def _get_lower(old, new):
+    if old is None or old > new:
+        return new
+    return old
+
 def _adapt_coordinates(points, x_min, y_min):
     """Adapt coordinates in 'points' according to 'x_min' and 'y_min".
 
@@ -73,16 +76,10 @@ def _adapt_coordinates(points, x_min, y_min):
     when invoked with points = ((1 1) (1 2)), x_min = 1, y_min = 1, points
     will be modified to be ((0 0) (0 1)).
     """
-
     if x_min | y_min:
         for p in points:
             p.x -= x_min
             p.y -= y_min
-
-def _get_lower(old, new):
-    if old is None or old > new:
-        return new
-    return old
 
 def count_bugs(bugfile, landscapefile):
     bugspec = read_bugspec(bugfile)

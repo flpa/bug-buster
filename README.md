@@ -1,7 +1,7 @@
 # Bug Buster #
-Bug buster is an implementation of a small shape recognition exercise for ASCII art shapes.
+Bug Buster is an implementation of a shape recognition exercise for ASCII art shapes.
 
-## Basic Description ##
+## Task Description ##
 
 Given a bug specification
 
@@ -24,12 +24,10 @@ the program should be able to spot three bugs in this landscape:
 
 Whitespaces are not part of the bug specification, hence these fields could contain other symbols in more complicated landscapes.
 
-## Extra features ##
+## Example Invocation ##
 
-In addition, I plan on adding further features and handling for edge cases, like:
-* Handling corrupted input and partially covered bugs using a detection threshold
-* Bug rotation (?) or multiple types of bugs
-* Colorized output to distinguish bugs next to each other
+    $ python main.py test-res/bug.txt test-res/landscape.txt 
+    3
 
 ## Related: Bliffoscope ##
 

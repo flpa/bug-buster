@@ -1,21 +1,7 @@
-"""bugbuster.py: Main file of bugbuster."""
+"""bugbuster.py: The file containing core functionality of bugbuster."""
 
 import codecs
 from model import *
-        
-def read_landscape(filepath):
-    """Creates a Landscape by parsing the given file."""
-    landscape = Landscape()
-
-    f = codecs.open(filepath, "r", "utf-8")
-    try:
-        for line in f:
-            line_content = line.strip('\n').strip('\r')
-            landscape.add_row(line_content)
-    finally:
-        # using the 'with' statement would look way better but requires 2.5+
-        f.close()
-    return landscape
 
 def _is_not_blank(char):
     """Determines whether a character is not equal to ' '."""
@@ -66,10 +52,10 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
     return BugSpec(width, height, set(points))
 
 def _adapt_coordinates(points, x_min, y_min):
-    """Adapt coordinates in 'points' according to 'x_min' and 'y_min".
+    """Adapt coordinates in 'points' according to 'x_min' and 'y_min'.
 
     Adapting means modifying the point coordinates so that they reflect
-    their positions in a virtual rectangle encircling the points, e.g.
+    their positions in a virtual rectangle surrounding the points, e.g.
     when invoked with points = ((1 1) (1 2)), x_min = 1, y_min = 1, points
     will be modified to be ((0 0) (0 1)).
     """
@@ -77,18 +63,28 @@ def _adapt_coordinates(points, x_min, y_min):
         for p in points:
             p.x -= x_min
             p.y -= y_min
+        
+def read_landscape(filepath):
+    """Creates a Landscape by parsing the given file."""
+    landscape = Landscape()
+
+    f = codecs.open(filepath, "r", "utf-8")
+    try:
+        for line in f:
+            line_content = line.strip('\n').strip('\r')
+            landscape.add_row(line_content)
+    finally:
+        # using the 'with' statement would look way better but requires 2.5+
+        f.close()
+    return landscape
 
 def count_bugs(bugfile, landscapefile):
     """Counts occurrences of a bug in a landscape and returns the result."""
     bugspec = read_bugspec(bugfile)
     landscape = read_landscape(landscapefile)
+    x_offset = y_offset = bug_count = 0
 
-    x_offset = 0
-    y_offset = 0
-
-    bug_count = 0
-
-    # TODO instance vars reduce param passing
+    # TODO instance variables would reduce param passing
     while _in_landscape(landscape, bugspec, x_offset, y_offset):
         if _all_points_match(landscape, bugspec, x_offset, y_offset):
             bug_count += 1

@@ -89,7 +89,7 @@ def count_bugs(bugfile, landscapefile):
         if _all_points_match(landscape, bugspec, x_offset, y_offset):
             bug_count += 1
 
-        if _reached_row_border(landscape, bugspec, x_offset):
+        if _reached_end_of_row(landscape, bugspec, x_offset):
             x_offset = 0
             y_offset += 1
         else:
@@ -108,5 +108,5 @@ def _all_points_match(landscape, bugspec, x_offset, y_offset):
             return False
     return True
 
-def _reached_row_border(landscape, bugspec, x_offset):
+def _reached_end_of_row(landscape, bugspec, x_offset):
     return landscape.width == bugspec.width + x_offset

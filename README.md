@@ -29,6 +29,10 @@ Whitespaces are not part of the bug specification, hence these fields could cont
     $ python main.py test-res/bug.txt test-res/landscape.txt 
     3
 
+## Running The Tests ##
+
+    $ python tests.py
+
 ## Related: Bliffoscope ##
 
 The task solved by Bug Buster is similar to **Bliffoscope**, which seems to be sort of an developer job interview exercise.

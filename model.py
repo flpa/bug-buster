@@ -11,9 +11,9 @@ class Point(object):
     """
 
     def __init__(self, x, y, value):
-        self.value = value
         self.x = x
         self.y = y
+        self.value = value
 
     def __eq__(self, other):
         """Overridden equality check comparing class and attributes."""
@@ -34,7 +34,7 @@ class BugSpec(object):
 
     """A data object that holds the distinctive features of a bug.
 
-    The representation is based on a virtual rectangle encircling the bug.
+    The representation is based on a virtual rectangle surrounding the bug.
     Therefore, this class consists of a set of points that represents the
     features of the bug as well as width and height of the rectangle.
     Point coordinates are relative to the rectangle.
@@ -54,7 +54,7 @@ class Landscape(object):
     
     """A class representing a landscape to be scanned for bugs.
     
-    A landscape consists of a collection of rows of equal length and holds 
+    A landscape consists of a collection of rows of uniform length and holds 
     information about the total width and height.
 
     Instance variables:
@@ -73,7 +73,6 @@ class Landscape(object):
         self._interjacent_empty_rows = []
 
     def add_row(self, row):
-        
         """Add a row to the landscape.
 
         If 'row' is the first non-empty row, this initializes the width of

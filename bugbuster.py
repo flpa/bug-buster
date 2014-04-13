@@ -1,14 +1,14 @@
-"""bugbuster.py: The file containing core functionality of bugbuster."""
+"""bugbuster.py: The file containing the core functionality of bugbuster."""
 
 import codecs
 from model import *
 
 def _is_not_blank(char):
-    """Determines whether a character is not equal to ' '."""
+    """Determine whether a character is not equal to ' '."""
     return char != ' '
 
 def read_bugspec(filepath, char_predicate=_is_not_blank):
-    """Reads a bug specification from a file.
+    """Read a bug specification from a file.
 
     Keyword arguments:
     char_predicate -- the predicate function that decides whether a character
@@ -24,25 +24,25 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
         for char in f.read():
             if char == '\r':
                 continue
+
             if char == '\n':
                 y += 1
                 x = 0
                 continue
-
+            
             if char_predicate(char):
                 points.append(Point(x, y, char))
                 x_max = max(x_max, x)
                 x_min = min(x_min, x)
                 y_max = max(y_max, y)
                 y_min = min(y_min, y)
-
+                
             x += 1
     finally:
         # using the 'with' statement would look way better but requires 2.5+
         f.close()
 
     assert points, "The bug specification contains no relevant points!"
-    
     _adapt_coordinates(points, x_min, y_min)
 
     # + 1 to compensate zero-based indexes
@@ -65,7 +65,7 @@ def _adapt_coordinates(points, x_min, y_min):
             p.y -= y_min
         
 def read_landscape(filepath):
-    """Creates a Landscape by parsing the given file."""
+    """Create a Landscape by parsing the given file."""
     landscape = Landscape()
 
     f = codecs.open(filepath, "r", "utf-8")
@@ -79,7 +79,7 @@ def read_landscape(filepath):
     return landscape
 
 def count_bugs(bugfile, landscapefile):
-    """Counts occurrences of a bug in a landscape and returns the result."""
+    """Count occurrences of a bug in a landscape and return the result."""
     bugspec = read_bugspec(bugfile)
     landscape = read_landscape(landscapefile)
     x_offset = y_offset = bug_count = 0

@@ -101,13 +101,13 @@ class ReadBugspecTests(TempFileTestCase):
     """Tests for bugbuster.read_bugspec."""
     
     def _pointset_from_tuples(self, *tuples):
+        """Utility method for creating a set of Points from a list of tuples."""
         newset = set()
         for t in tuples:
             newset.add(Point(*t))
         return newset
 
     def _check_width_height_points(self, width, height, points, predicate=None):
-
         if predicate:
             bugspec = read_bugspec(self.tempfile.name, predicate)
         else:

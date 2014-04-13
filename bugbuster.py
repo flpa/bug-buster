@@ -28,7 +28,8 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
     is relevant for the bug specification (default: is_blank)
     """
     x = y = x_max = y_max = 0
-    x_min = y_min = None
+    # init with infinity -> anything is smaller
+    x_min = y_min = float('inf')
     points = []
 
     f = codecs.open(filepath, "r", "utf-8")
@@ -44,9 +45,9 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
             if char_predicate(char):
                 points.append(Point(x, y, char))
                 x_max = max(x_max, x)
-                x_min = _get_lower(x_min, x)
+                x_min = min(x_min, x)
                 y_max = max(y_max, y)
-                y_min = _get_lower(y_min, y)
+                y_min = min(y_min, y)
 
             x += 1
     finally:
@@ -62,11 +63,6 @@ def read_bugspec(filepath, char_predicate=_is_not_blank):
     height = y_max - y_min + 1
         
     return BugSpec(width, height, set(points))
-
-def _get_lower(old, new):
-    if old is None or old > new:
-        return new
-    return old
 
 def _adapt_coordinates(points, x_min, y_min):
     """Adapt coordinates in 'points' according to 'x_min' and 'y_min".

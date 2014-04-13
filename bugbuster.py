@@ -13,6 +13,7 @@ def read_landscape(filepath):
             line_content = line.strip('\n').strip('\r')
             landscape.add_row(line_content)
     finally:
+        # using the 'with' statement would look way better but requires 2.5+
         f.close()
     return landscape
 
@@ -78,6 +79,7 @@ def _adapt_coordinates(points, x_min, y_min):
             p.y -= y_min
 
 def count_bugs(bugfile, landscapefile):
+    """Counts occurrences of a bug in a landscape and returns the result."""
     bugspec = read_bugspec(bugfile)
     landscape = read_landscape(landscapefile)
 
@@ -104,8 +106,11 @@ def _in_landscape(landscape, bugspec, x_offset, y_offset):
             landscape.height >= bugspec.height + y_offset)
 
 def _all_points_match(landscape, bugspec, x_offset, y_offset):
-    return all(landscape.rows[y_offset + p.y][x_offset + p.x] == p.value
-               for p in bugspec.points)
+    # 'all' is not available in Python 2.4
+    for p in bugspec.points:
+        if landscape.rows[y_offset + p.y][x_offset + p.x] != p.value:
+            return False
+    return True
 
 def _reached_row_border(landscape, bugspec, x_offset):
     return landscape.width == bugspec.width + x_offset
